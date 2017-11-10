@@ -5,7 +5,7 @@ import java.time.Clock;
 import java.util.Date;
 
 import com.bamboo.common.utils.ShiroUtils;
-import com.bamboo.system.domain.User;
+import com.bamboo.sys.domain.User;
 
 public class BaseEntity implements Serializable {
 
@@ -17,9 +17,9 @@ public class BaseEntity implements Serializable {
 	
     private Date createTime;			//创建时间
     
-    private String updateBy;			//更新者
+    private String modifyBy;			//更新者
     
-    private Date updateTime;			//更新时间
+    private Date modifyTime;			//更新时间
     
     /**
      * 执行新增操作之前需要执行的步骤
@@ -29,12 +29,12 @@ public class BaseEntity implements Serializable {
     	User user = ShiroUtils.getUser();
         if (user != null) {
             this.createBy = user.getName();
-            this.updateBy = user.getName();
+            this.modifyBy = user.getName();
         }
 
         Date now = Date.from(Clock.systemDefaultZone().instant());
         this.setCreateTime(now);
-        this.setUpdateTime(now);
+        this.setModifyTime(now);
     }
     /**
      * 执行修改操作之前需要执行的步骤
@@ -43,10 +43,10 @@ public class BaseEntity implements Serializable {
     public void preUpadate () {
     	User user = ShiroUtils.getUser();
         if (user != null) {
-        	this.updateBy = user.getName();
+        	this.modifyBy = user.getName();
         }
         Date now = Date.from(Clock.systemDefaultZone().instant());
-        this.setUpdateTime(now);
+        this.setModifyTime(now);
     }
 
 	public Long getId() {
@@ -72,21 +72,17 @@ public class BaseEntity implements Serializable {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-
-	public String getUpdateBy() {
-		return updateBy;
+	public String getModifyBy() {
+		return modifyBy;
 	}
-
-	public void setUpdateBy(String updateBy) {
-		this.updateBy = updateBy;
+	public void setModifyBy(String modifyBy) {
+		this.modifyBy = modifyBy;
 	}
-
-	public Date getUpdateTime() {
-		return updateTime;
+	public Date getModifyTime() {
+		return modifyTime;
 	}
-
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
+	public void setModifyTime(Date modifyTime) {
+		this.modifyTime = modifyTime;
 	}
 
 }

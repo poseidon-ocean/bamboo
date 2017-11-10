@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.bamboo.common.domain.Tree;
 import com.bamboo.common.utils.BuildTree;
-import com.bamboo.system.domain.MenuDO;
+import com.bamboo.sys.domain.MenuDO;
 
 public class BuildTreeTester2 {
 

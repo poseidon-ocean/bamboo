@@ -3,7 +3,7 @@ package com.bamboo.common.controller;
 import org.springframework.stereotype.Controller;
 
 import com.bamboo.common.utils.ShiroUtils;
-import com.bamboo.system.domain.User;
+import com.bamboo.sys.domain.User;
 
 @Controller
 public class BaseController {

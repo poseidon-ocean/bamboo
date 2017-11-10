@@ -20,7 +20,7 @@ import com.bamboo.common.utils.HttpContextUtils;
 import com.bamboo.common.utils.IPUtils;
 import com.bamboo.common.utils.JSONUtils;
 import com.bamboo.common.utils.ShiroUtils;
-import com.bamboo.system.domain.User;
+import com.bamboo.sys.domain.User;
 
 @Aspect
 @Component

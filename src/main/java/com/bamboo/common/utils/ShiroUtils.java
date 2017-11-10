@@ -3,7 +3,7 @@ package com.bamboo.common.utils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
-import com.bamboo.system.domain.User;
+import com.bamboo.sys.domain.User;
 
 public class ShiroUtils {
 	public static Subject getSubjct() {
