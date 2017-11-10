@@ -3,12 +3,14 @@ package com.bamboo.sys.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bamboo.sys.domain.DeptDO;
 import com.bamboo.sys.domain.User;
 import com.bamboo.sys.domain.UserRoleDO;
 import com.bamboo.sys.mapper.DeptMapper;
@@ -18,7 +20,7 @@ import com.bamboo.sys.service.UserService;
 
 @Transactional
 @Service
-public class UserServiceImp implements UserService {
+public class UserServiceImpl implements UserService {
 	@Autowired
 	UserMapper userMapper;
 	@Autowired
@@ -30,7 +32,15 @@ public class UserServiceImp implements UserService {
 	public User get(Long id) {
 		List<Long> roleIds = userRoleMapper.listRoleId(id);
 		User user = userMapper.get(id);
-		user.setDeptName(sysDeptMapper.get(user.getDeptId()).getName());
+		
+		Long deptId = user.getDeptId();
+		if(Objects.nonNull(deptId)) {
+			DeptDO d = sysDeptMapper.get(user.getDeptId());
+			if(Objects.nonNull(d)) {
+				user.setDeptName(d.getName());
+			}
+		}
+		
 		user.setroleIds(roleIds);
 		return user;
 	}

@@ -63,6 +63,7 @@ public class UserController extends BaseController {
 	String edit(Model model, @PathVariable("id") Long id) {
 		User user= userService.get(id);
 		model.addAttribute("user", user);
+		model.addAttribute("roleIds", user.getroleIds());
 		List<RoleDO> roles = roleService.list(id);
 		model.addAttribute("roles", roles);
 		return "sys/user/userEdit";

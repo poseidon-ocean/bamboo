@@ -59,7 +59,7 @@
 							<div class="col-sm-8">
 								<label th:each="role:${roles}" class="checkbox-inline">
 									<input name="role" type="checkbox" th:value="${role.roleId}"
-									th:text="${role.roleName}" th:checked="${role.roleSign}">
+									th:text="${role.roleName}" />
 								</label>
 							</div>
 						</div>
@@ -74,7 +74,7 @@
 		</div>
 	</div>
 	<div th:include="include::footer"></div>
-	<script type="text/javascript" src="/module/sys/user/userEdit.js?v=1.0.0">
+	<script type="text/javascript" src="/module/sys/user/userEdit.js?v=1.0.2">
 	</script>
 </body>
 </html>

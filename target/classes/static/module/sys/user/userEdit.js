@@ -1,7 +1,17 @@
 // 以下为官方示例
-$().ready(function() {
+$(function() {
 	validateRule();
 	// $("#signupForm").validate();
+	
+	
+	var roleIds = $("#roleIds").val();
+
+	$("input:checkbox[name=role]").each(function(i) {
+		var $this = $(this);
+		if(roleIds.indexOf($this.val()) > 0){
+			$this.attr("checked",'true');
+		}
+	});
 });
 
 $.validator.setDefaults({
