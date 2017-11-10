@@ -1,0 +1,17 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.bamboo.common.config.BambooConfig",
+      "name": "bamboo",
+      "type": "com.bamboo.common.config.BambooConfig"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.bamboo.common.config.BambooConfig",
+      "name": "bamboo.upload-path",
+      "type": "java.lang.String"
+    }
+  ]
+}
