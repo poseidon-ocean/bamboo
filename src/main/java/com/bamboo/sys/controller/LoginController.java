@@ -22,7 +22,7 @@ import com.bamboo.common.domain.Tree;
 import com.bamboo.common.utils.MD5Utils;
 import com.bamboo.common.utils.R;
 import com.bamboo.common.utils.ShiroUtils;
-import com.bamboo.sys.domain.MenuDO;
+import com.bamboo.sys.domain.Menu;
 import com.bamboo.sys.service.MenuService;
 
 @Controller
@@ -40,7 +40,7 @@ public class LoginController extends BaseController {
 	@Log("请求访问主页")
 	@GetMapping({ "/index" })
 	String index(Model model) {
-		List<Tree<MenuDO>> menus = menuService.listMenuTree(getUserId());
+		List<Tree<Menu>> menus = menuService.listMenuTree(getUserId());
 		model.addAttribute("menus", menus);
 		model.addAttribute("name", getUser().getName());
 		logger.info(getUser().getName());

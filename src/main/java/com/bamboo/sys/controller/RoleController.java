@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.bamboo.common.annotation.Log;
 import com.bamboo.common.controller.BaseController;
 import com.bamboo.common.utils.R;
-import com.bamboo.sys.domain.RoleDO;
+import com.bamboo.sys.domain.Role;
 import com.bamboo.sys.service.RoleService;
 
 @RequestMapping("/sys/role")
@@ -32,8 +32,8 @@ public class RoleController extends BaseController {
 	@RequiresPermissions("sys:role:role")
 	@RequestMapping("/list")
 	@ResponseBody()
-	List<RoleDO> list() {
-		List<RoleDO> roles = roleService.list();
+	List<Role> list() {
+		List<Role> roles = roleService.list();
 		return roles;
 	}
 
@@ -48,7 +48,7 @@ public class RoleController extends BaseController {
 	@RequiresPermissions("sys:role:edit")
 	@RequestMapping("/edit/{id}")
 	String edit(@PathVariable("id") Long id, Model model) {
-		RoleDO roleDO = roleService.get(id);
+		Role roleDO = roleService.get(id);
 		model.addAttribute("role", roleDO);
 		return prefix + "/edit";
 	}
@@ -57,7 +57,7 @@ public class RoleController extends BaseController {
 	@RequiresPermissions("sys:role:add")
 	@RequestMapping("/save")
 	@ResponseBody()
-	R save(RoleDO role) {
+	R save(Role role) {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
@@ -72,7 +72,7 @@ public class RoleController extends BaseController {
 	@RequiresPermissions("sys:role:edit")
 	@RequestMapping("/update")
 	@ResponseBody()
-	R update(RoleDO role) {
+	R update(Role role) {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}

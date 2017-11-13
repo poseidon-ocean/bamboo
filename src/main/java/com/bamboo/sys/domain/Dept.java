@@ -1,22 +1,16 @@
 package com.bamboo.sys.domain;
 
-import java.io.Serializable;
-import java.util.Date;
+import com.bamboo.common.base.BaseEntity;
 
 
 
 /**
  * 部门管理
  * 
- * @author chglee
- * @email 1992lcg@163.com
- * @date 2017-09-27 14:28:36
  */
-public class DeptDO implements Serializable {
+public class Dept extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	
-	//
-	private Long deptId;
 	//上级部门ID，一级部门为0
 	private Long parentId;
 	//部门名称
@@ -26,18 +20,6 @@ public class DeptDO implements Serializable {
 	//是否删除  -1：已删除  0：正常
 	private Integer delFlag;
 
-	/**
-	 * 设置：
-	 */
-	public void setDeptId(Long deptId) {
-		this.deptId = deptId;
-	}
-	/**
-	 * 获取：
-	 */
-	public Long getDeptId() {
-		return deptId;
-	}
 	/**
 	 * 设置：上级部门ID，一级部门为0
 	 */

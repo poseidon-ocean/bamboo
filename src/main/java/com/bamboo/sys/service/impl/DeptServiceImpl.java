@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.bamboo.common.domain.Tree;
 import com.bamboo.common.utils.BuildTree;
-import com.bamboo.sys.domain.DeptDO;
+import com.bamboo.sys.domain.Dept;
 import com.bamboo.sys.mapper.DeptMapper;
 import com.bamboo.sys.service.SysDeptService;
 
@@ -20,12 +20,12 @@ public class DeptServiceImpl implements SysDeptService {
 	private DeptMapper sysDeptMapper;
 	
 	@Override
-	public DeptDO get(Long deptId){
-		return sysDeptMapper.get(deptId);
+	public Dept get(Long deptId){
+		return sysDeptMapper.queryById(deptId);
 	}
 	
 	@Override
-	public List<DeptDO> list(Map<String, Object> map){
+	public List<Dept> list(Map<String, Object> map){
 		return sysDeptMapper.list(map);
 	}
 	
@@ -35,12 +35,12 @@ public class DeptServiceImpl implements SysDeptService {
 	}
 	
 	@Override
-	public int save(DeptDO sysDept){
-		return sysDeptMapper.save(sysDept);
+	public int save(Dept sysDept){
+		return sysDeptMapper.create(sysDept);
 	}
 	
 	@Override
-	public int update(DeptDO sysDept){
+	public int update(Dept sysDept){
 		return sysDeptMapper.update(sysDept);
 	}
 	
@@ -55,12 +55,12 @@ public class DeptServiceImpl implements SysDeptService {
 	}
 	
 	@Override
-	public Tree<DeptDO> getTree() {
-		List<Tree<DeptDO>> trees = new ArrayList<Tree<DeptDO>>();
-		List<DeptDO> SysDepts = sysDeptMapper.list(new HashMap<String,Object>());
-		for (DeptDO SysDept : SysDepts) {
-			Tree<DeptDO> tree = new Tree<DeptDO>();
-			tree.setId(SysDept.getDeptId().toString());
+	public Tree<Dept> getTree() {
+		List<Tree<Dept>> trees = new ArrayList<Tree<Dept>>();
+		List<Dept> SysDepts = sysDeptMapper.list(new HashMap<String,Object>());
+		for (Dept SysDept : SysDepts) {
+			Tree<Dept> tree = new Tree<Dept>();
+			tree.setId(SysDept.getId().toString());
 			tree.setParentId(SysDept.getParentId().toString());
 			tree.setText(SysDept.getName());
 			Map<String, Object> state = new HashMap<>();
@@ -69,7 +69,7 @@ public class DeptServiceImpl implements SysDeptService {
 			trees.add(tree);
 		}
 		// 默认顶级菜单为０，根据数据库实际情况调整
-		Tree<DeptDO> t = BuildTree.build(trees);
+		Tree<Dept> t = BuildTree.build(trees);
 		return t;
 	}
 	

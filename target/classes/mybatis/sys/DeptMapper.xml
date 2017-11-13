@@ -3,17 +3,17 @@
 
 <mapper namespace="com.bamboo.sys.mapper.DeptMapper">
 
-	<select id="get" resultType="com.bamboo.sys.domain.DeptDO">
+	<select id="queryById" resultType="com.bamboo.sys.domain.Dept">
 		select
-		`dept_id`,`parent_id`,`name`,`order_num`,`del_flag` from sys_dept
-		where dept_id = #{value}
+		`id`,`parent_id`,`name`,`order_num`,`del_flag` from sys_dept
+		where id = #{value}
 	</select>
 
-	<select id="list" resultType="com.bamboo.sys.domain.DeptDO">
-		select `dept_id`,`parent_id`,`name`,`order_num`,`del_flag` from
+	<select id="list" resultType="com.bamboo.sys.domain.Dept">
+		select `id`,`parent_id`,`name`,`order_num`,`del_flag` from
 		sys_dept
 		<where>
-			<if test="deptId != null and deptId != ''"> and dept_id = #{deptId} </if>
+			<if test="id != null and id != ''"> and id = #{id} </if>
 			<if test="parentId != null and parentId != ''"> and parent_id = #{parentId} </if>
 			<if test="name != null and name != ''"> and name = #{name} </if>
 			<if test="orderNum != null and orderNum != ''"> and order_num = #{orderNum} </if>
@@ -24,7 +24,7 @@
 				order by ${sort} ${order}
 			</when>
 			<otherwise>
-				order by dept_id desc
+				order by id desc
 			</otherwise>
 		</choose>
 		<if test="offset != null and limit != null">
@@ -35,7 +35,7 @@
 	<select id="count" resultType="int">
 		select count(*) from sys_dept
 		<where>
-			<if test="deptId != null and deptId != ''"> and dept_id = #{deptId} </if>
+			<if test="id != null and id != ''"> and id = #{id} </if>
 			<if test="parentId != null and parentId != ''"> and parent_id = #{parentId} </if>
 			<if test="name != null and name != ''"> and name = #{name} </if>
 			<if test="orderNum != null and orderNum != ''"> and order_num = #{orderNum} </if>
@@ -43,8 +43,8 @@
 		</where>
 	</select>
 
-	<insert id="save" parameterType="com.bamboo.sys.domain.DeptDO"
-		useGeneratedKeys="true" keyProperty="deptId">
+	<insert id="save" parameterType="com.bamboo.sys.domain.Dept"
+		useGeneratedKeys="true" keyProperty="id">
 		insert into sys_dept
 		(
 		`parent_id`,
@@ -61,7 +61,7 @@
 		)
 	</insert>
 
-	<update id="update" parameterType="com.bamboo.sys.domain.DeptDO">
+	<update id="update" parameterType="com.bamboo.sys.domain.Dept">
 		update sys_dept
 		<set>
 			<if test="parentId != null">`parent_id` = #{parentId}, </if>
@@ -69,18 +69,18 @@
 			<if test="orderNum != null">`order_num` = #{orderNum}, </if>
 			<if test="delFlag != null">`del_flag` = #{delFlag}</if>
 		</set>
-		where dept_id = #{deptId}
+		where id = #{id}
 	</update>
 
 	<delete id="remove">
-		delete from sys_dept where dept_id = #{value}
+		delete from sys_dept where id = #{value}
 	</delete>
 
 	<delete id="batchRemove">
-		delete from sys_dept where dept_id in
-		<foreach item="deptId" collection="array" open="(" separator=","
+		delete from sys_dept where id in
+		<foreach item="id" collection="array" open="(" separator=","
 			close=")">
-			#{deptId}
+			#{id}
 		</foreach>
 	</delete>
 

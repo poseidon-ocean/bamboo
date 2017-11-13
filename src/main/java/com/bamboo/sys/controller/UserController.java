@@ -18,7 +18,7 @@ import com.bamboo.common.utils.MD5Utils;
 import com.bamboo.common.utils.PageUtils;
 import com.bamboo.common.utils.Query;
 import com.bamboo.common.utils.R;
-import com.bamboo.sys.domain.RoleDO;
+import com.bamboo.sys.domain.Role;
 import com.bamboo.sys.domain.User;
 import com.bamboo.sys.service.RoleService;
 import com.bamboo.sys.service.UserService;
@@ -52,7 +52,7 @@ public class UserController extends BaseController {
 	@Log("添加用户")
 	@RequestMapping("/add")
 	String add(Model model) {
-		List<RoleDO> roles = roleService.list();
+		List<Role> roles = roleService.list();
 		model.addAttribute("roles", roles);
 		return "sys/user/userAdd";
 	}
@@ -64,7 +64,7 @@ public class UserController extends BaseController {
 		User user= userService.get(id);
 		model.addAttribute("user", user);
 		model.addAttribute("roleIds", user.getroleIds());
-		List<RoleDO> roles = roleService.list(id);
+		List<Role> roles = roleService.list(id);
 		model.addAttribute("roles", roles);
 		return "sys/user/userEdit";
 	}
@@ -139,9 +139,9 @@ public class UserController extends BaseController {
 	@RequestMapping("/resetPwd/{id}")
 	String resetPwd(@PathVariable("id") Long userId, Model model) {
 
-		User userDO = new User();
-		userDO.setId(userId);
-		model.addAttribute("user", userDO);
+		User user = new User();
+		user.setId(userId);
+		model.addAttribute("user", user);
 		return "sys/user/reset_pwd";
 	}
 

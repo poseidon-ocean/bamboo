@@ -5,13 +5,13 @@ import java.util.List;
 
 import com.bamboo.common.domain.Tree;
 import com.bamboo.common.utils.BuildTree;
-import com.bamboo.sys.domain.MenuDO;
+import com.bamboo.sys.domain.Menu;
 
 public class BuildTreeTester2 {
 
 	public static void main(String[] args) {
 
-		List<Tree<MenuDO>> trees = new ArrayList<Tree<MenuDO>>();
+		List<Tree<Menu>> trees = new ArrayList<Tree<Menu>>();
 //		List<SysMenuDO> SysMenuDOs = new ArrayList<SysMenuDO>();
 //		SysMenuDO menuDO = new SysMenuDO();
 	//	menuDO.setMenuId("0");
@@ -38,11 +38,11 @@ public class BuildTreeTester2 {
 //		tests.add(new Test("20", "5", "等等"));
 
 		//for (Test test : tests) {
-			Tree<MenuDO> tree = new Tree<MenuDO>();
+			Tree<Menu> tree = new Tree<Menu>();
 			tree.setId("1");
 			tree.setParentId("0");
 			tree.setText("");
-			Tree<MenuDO> tree2 = new Tree<MenuDO>();
+			Tree<Menu> tree2 = new Tree<Menu>();
 			tree2.setId("3");
 			tree2.setParentId("0");
 			tree2.setText("");
@@ -50,7 +50,7 @@ public class BuildTreeTester2 {
 			trees.add(tree);
 	//	}
 
-		List<Tree<MenuDO>> t = BuildTree.buildList(trees,"0");
+		List<Tree<Menu>> t = BuildTree.buildList(trees,"0");
 		System.out.println(t);
 	}
 }

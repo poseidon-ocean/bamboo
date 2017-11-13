@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.bamboo.common.domain.Tree;
 import com.bamboo.common.utils.BuildTree;
-import com.bamboo.sys.domain.MenuDO;
+import com.bamboo.sys.domain.Menu;
 import com.bamboo.sys.mapper.MenuMapper;
 import com.bamboo.sys.mapper.RoleMenuMapper;
 import com.bamboo.sys.service.MenuService;
@@ -33,12 +33,12 @@ public class MenuServiceImpl implements MenuService {
 	 */
 	@Cacheable
 	@Override
-	public Tree<MenuDO> getSysMenuTree(Long id) {
-		List<Tree<MenuDO>> trees = new ArrayList<Tree<MenuDO>>();
-		List<MenuDO> menuDOs = menuMapper.listMenuByUserId(id);
-		for (MenuDO sysMenuDO : menuDOs) {
-			Tree<MenuDO> tree = new Tree<MenuDO>();
-			tree.setId(sysMenuDO.getMenuId().toString());
+	public Tree<Menu> getSysMenuTree(Long id) {
+		List<Tree<Menu>> trees = new ArrayList<Tree<Menu>>();
+		List<Menu> menuDOs = menuMapper.listMenuByUserId(id);
+		for (Menu sysMenuDO : menuDOs) {
+			Tree<Menu> tree = new Tree<Menu>();
+			tree.setId(sysMenuDO.getId().toString());
 			tree.setParentId(sysMenuDO.getParentId().toString());
 			tree.setText(sysMenuDO.getName());
 			Map<String, Object> attributes = new HashMap<>();
@@ -48,13 +48,13 @@ public class MenuServiceImpl implements MenuService {
 			trees.add(tree);
 		}
 		// 默认顶级菜单为０，根据数据库实际情况调整
-		Tree<MenuDO> t = BuildTree.build(trees);
+		Tree<Menu> t = BuildTree.build(trees);
 		return t;
 	}
 
 	@Override
-	public List<MenuDO> list() {
-		List<MenuDO> menus = menuMapper.list(new HashMap<>());
+	public List<Menu> list() {
+		List<Menu> menus = menuMapper.list(new HashMap<>());
 		return menus;
 	}
 
@@ -65,52 +65,52 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	@Override
-	public int save(MenuDO menu) {
-		int r = menuMapper.save(menu);
+	public int save(Menu menu) {
+		int r = menuMapper.create(menu);
 		return r;
 	}
 
 	@Override
-	public int update(MenuDO menu) {
+	public int update(Menu menu) {
 		int r = menuMapper.update(menu);
 		return r;
 	}
 
 	@Override
-	public MenuDO get(Long id) {
-		MenuDO menuDO = menuMapper.get(id);
+	public Menu get(Long id) {
+		Menu menuDO = menuMapper.queryById(id);
 		return menuDO;
 	}
 
 	@Override
-	public Tree<MenuDO> getTree() {
-		List<Tree<MenuDO>> trees = new ArrayList<Tree<MenuDO>>();
-		List<MenuDO> menuDOs = menuMapper.list(new HashMap<>());
-		for (MenuDO sysMenuDO : menuDOs) {
-			Tree<MenuDO> tree = new Tree<MenuDO>();
-			tree.setId(sysMenuDO.getMenuId().toString());
+	public Tree<Menu> getTree() {
+		List<Tree<Menu>> trees = new ArrayList<Tree<Menu>>();
+		List<Menu> menuDOs = menuMapper.list(new HashMap<>());
+		for (Menu sysMenuDO : menuDOs) {
+			Tree<Menu> tree = new Tree<Menu>();
+			tree.setId(sysMenuDO.getId().toString());
 			tree.setParentId(sysMenuDO.getParentId().toString());
 			tree.setText(sysMenuDO.getName());
 			trees.add(tree);
 		}
 		// 默认顶级菜单为０，根据数据库实际情况调整
-		Tree<MenuDO> t = BuildTree.build(trees);
+		Tree<Menu> t = BuildTree.build(trees);
 		return t;
 	}
 
 	@Override
-	public Tree<MenuDO> getTree(Long id) {
+	public Tree<Menu> getTree(Long id) {
 		// 根据roleId查询权限
 		List<Long> menuIds = roleMenuMapper.listMenuIdByRoleId(id);
-		List<Tree<MenuDO>> trees = new ArrayList<Tree<MenuDO>>();
-		List<MenuDO> menuDOs = menuMapper.list(new HashMap<String, Object>());
-		for (MenuDO sysMenuDO : menuDOs) {
-			Tree<MenuDO> tree = new Tree<MenuDO>();
-			tree.setId(sysMenuDO.getMenuId().toString());
+		List<Tree<Menu>> trees = new ArrayList<Tree<Menu>>();
+		List<Menu> menuDOs = menuMapper.list(new HashMap<String, Object>());
+		for (Menu sysMenuDO : menuDOs) {
+			Tree<Menu> tree = new Tree<Menu>();
+			tree.setId(sysMenuDO.getId().toString());
 			tree.setParentId(sysMenuDO.getParentId().toString());
 			tree.setText(sysMenuDO.getName());
 			Map<String, Object> state = new HashMap<>();
-			Long menuId = sysMenuDO.getMenuId();
+			Long menuId = sysMenuDO.getId();
 			if (menuIds.contains(menuId)) {
 				state.put("selected", true);
 			} else {
@@ -120,7 +120,7 @@ public class MenuServiceImpl implements MenuService {
 			trees.add(tree);
 		}
 		// 默认顶级菜单为０，根据数据库实际情况调整
-		Tree<MenuDO> t = BuildTree.build(trees);
+		Tree<Menu> t = BuildTree.build(trees);
 		return t;
 	}
 
@@ -137,12 +137,12 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	@Override
-	public List<Tree<MenuDO>> listMenuTree(Long id) {
-		List<Tree<MenuDO>> trees = new ArrayList<Tree<MenuDO>>();
-		List<MenuDO> menuDOs = menuMapper.listMenuByUserId(id);
-		for (MenuDO sysMenuDO : menuDOs) {
-			Tree<MenuDO> tree = new Tree<MenuDO>();
-			tree.setId(sysMenuDO.getMenuId().toString());
+	public List<Tree<Menu>> listMenuTree(Long id) {
+		List<Tree<Menu>> trees = new ArrayList<Tree<Menu>>();
+		List<Menu> menuDOs = menuMapper.listMenuByUserId(id);
+		for (Menu sysMenuDO : menuDOs) {
+			Tree<Menu> tree = new Tree<Menu>();
+			tree.setId(sysMenuDO.getId().toString());
 			tree.setParentId(sysMenuDO.getParentId().toString());
 			tree.setText(sysMenuDO.getName());
 			Map<String, Object> attributes = new HashMap<>();
@@ -152,7 +152,7 @@ public class MenuServiceImpl implements MenuService {
 			trees.add(tree);
 		}
 		// 默认顶级菜单为０，根据数据库实际情况调整
-		List<Tree<MenuDO>> list = BuildTree.buildList(trees, "0");
+		List<Tree<Menu>> list = BuildTree.buildList(trees, "0");
 		return list;
 	}
 

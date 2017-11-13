@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.bamboo.common.controller.BaseController;
 import com.bamboo.common.domain.Tree;
 import com.bamboo.common.utils.R;
-import com.bamboo.sys.domain.DeptDO;
-import com.bamboo.sys.domain.MenuDO;
+import com.bamboo.sys.domain.Dept;
+import com.bamboo.sys.domain.Menu;
 import com.bamboo.sys.service.SysDeptService;
 
 /**
@@ -45,11 +45,11 @@ public class DeptController extends BaseController{
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("system:sysDept:sysDept")
-	public List<DeptDO> list(){
+	public List<Dept> list(){
 		//查询列表数据
        // Query query = new Query(params);
 		Map<String, Object> query = new HashMap<>();
-		List<DeptDO> sysDeptList = sysDeptService.list(query);
+		List<Dept> sysDeptList = sysDeptService.list(query);
 	//	int total = sysDeptService.count(query);
 		//PageUtils pageUtils = new PageUtils(sysDeptList, total);
 		return sysDeptList;
@@ -70,7 +70,7 @@ public class DeptController extends BaseController{
 	@GetMapping("/edit/{deptId}")
 	@RequiresPermissions("system:sysDept:edit")
 	String edit(@PathVariable("deptId") Long deptId,Model model){
-		DeptDO sysDept = sysDeptService.get(deptId);
+		Dept sysDept = sysDeptService.get(deptId);
 		model.addAttribute("sysDept", sysDept);
 	    return "system/sysDept/edit";
 	}
@@ -81,7 +81,7 @@ public class DeptController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("system:sysDept:add")
-	public R save( DeptDO sysDept){
+	public R save( Dept sysDept){
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
@@ -96,7 +96,7 @@ public class DeptController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("system:sysDept:edit")
-	public R update( DeptDO sysDept){
+	public R update( Dept sysDept){
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
@@ -139,8 +139,8 @@ public class DeptController extends BaseController{
 	
 	@GetMapping("/tree")
 	@ResponseBody
-	public Tree<DeptDO> tree() {
-		Tree<DeptDO> tree = new Tree<DeptDO>();
+	public Tree<Dept> tree() {
+		Tree<Dept> tree = new Tree<Dept>();
 		tree = sysDeptService.getTree();
 		return tree;
 	}

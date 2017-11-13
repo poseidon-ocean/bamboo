@@ -1,38 +1,24 @@
 package com.bamboo.sys.mapper;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.bamboo.sys.domain.UserRoleDO;
+import com.bamboo.common.base.BaseMapper;
+import com.bamboo.sys.domain.UserRole;
 
 /**
  * 用户与角色对应关系
  * 
  */
 @Mapper
-public interface UserRoleMapper {
-
-	UserRoleDO get(Long id);
-
-	List<UserRoleDO> list(Map<String, Object> map);
-
-	int count(Map<String, Object> map);
-
-	int save(UserRoleDO userRole);
-
-	int update(UserRoleDO userRole);
-
-	int remove(Long id);
-
-	int batchRemove(Long[] ids);
+public interface UserRoleMapper extends BaseMapper<UserRole> {
 
 	List<Long> listRoleId(Long userId);
 
 	int removeByUserId(Long userId);
 
-	int batchSave(List<UserRoleDO> list);
+	int batchSave(List<UserRole> list);
 
 	int batchRemoveByUserId(Long[] ids);
 }

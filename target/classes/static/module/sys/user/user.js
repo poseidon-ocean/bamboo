@@ -116,8 +116,8 @@ MgrUser.remove = function(id) {
 		btn : [ '确定', '取消' ]
 	}, function() {
 		$.ajax({
-			url : MgrUser.prsfix + "/remove",
-			type : "post",
+			url : MgrUser.prefix + "/remove",
+			type : "POST",
 			data : {
 				'id' : id
 			},

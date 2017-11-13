@@ -6,27 +6,27 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 
 import com.bamboo.common.domain.Tree;
-import com.bamboo.sys.domain.MenuDO;
+import com.bamboo.sys.domain.Menu;
 
 @Service
 public interface MenuService {
-	Tree<MenuDO> getSysMenuTree(Long id);
+	Tree<Menu> getSysMenuTree(Long id);
 
-	List<Tree<MenuDO>> listMenuTree(Long id);
+	List<Tree<Menu>> listMenuTree(Long id);
 
-	Tree<MenuDO> getTree();
+	Tree<Menu> getTree();
 
-	Tree<MenuDO> getTree(Long id);
+	Tree<Menu> getTree(Long id);
 
-	List<MenuDO> list();
+	List<Menu> list();
 
 	int remove(Long id);
 
-	int save(MenuDO menu);
+	int save(Menu menu);
 
-	int update(MenuDO menu);
+	int update(Menu menu);
 
-	MenuDO get(Long id);
+	Menu get(Long id);
 
 	Set<String> listPerms(Long userId);
 }

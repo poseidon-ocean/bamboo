@@ -3,18 +3,21 @@
 
 <mapper namespace="com.bamboo.sys.mapper.MenuMapper">
 
-	<select id="get" resultType="com.bamboo.sys.domain.MenuDO">
-		select
-		`menu_id`,`parent_id`,`name`,`url`,`perms`,`type`,`icon`,`order_num`,`gmt_create`,`gmt_modified`
-		from sys_menu where menu_id = #{value}
+	<sql id="Base_Column_List">
+		m.`id`,`parent_id`,`name`,`url`,`perms`,`type`,`icon`,`order_num`,
+		`create_by`,`create_time`,`modify_by`,`modify_time`
+	</sql>
+	
+	<select id="queryById" resultType="com.bamboo.sys.domain.Menu">
+		select <include refid="Base_Column_List" />
+		from sys_menu m where id = #{value}
 	</select>
 
-	<select id="list" resultType="com.bamboo.sys.domain.MenuDO">
-		select
-		`menu_id`,`parent_id`,`name`,`url`,`perms`,`type`,`icon`,`order_num`,`gmt_create`,`gmt_modified`
-		from sys_menu
+	<select id="list" resultType="com.bamboo.sys.domain.Menu">
+		select <include refid="Base_Column_List" />
+		from sys_menu m
 		<where>
-			<if test="menuId != null and menuId != ''"> and menu_id = #{menuId} </if>
+			<if test="id != null and id != ''"> and id = #{id} </if>
 			<if test="parentId != null and parentId != ''"> and parent_id = #{parentId} </if>
 			<if test="name != null and name != ''"> and name = #{name} </if>
 			<if test="url != null and url != ''"> and url = #{url} </if>
@@ -22,15 +25,17 @@
 			<if test="type != null and type != ''"> and type = #{type} </if>
 			<if test="icon != null and icon != ''"> and icon = #{icon} </if>
 			<if test="orderNum != null and orderNum != ''"> and order_num = #{orderNum} </if>
-			<if test="gmtCreate != null and gmtCreate != ''"> and gmt_create = #{gmtCreate} </if>
-			<if test="gmtModified != null and gmtModified != ''"> and gmt_modified = #{gmtModified} </if>
+			<if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+			<if test="modifyBy != null and modifyBy != ''"> and modify_by = #{modifyBy} </if>
+			<if test="modifyTime != null and modifyTime != ''"> and modify_time = #{modifyTime} </if>
 		</where>
 		<choose>
 			<when test="sort != null and sort.trim() != ''">
 				order by ${sort} ${order}
 			</when>
 			<otherwise>
-				order by menu_id desc
+				order by id desc
 			</otherwise>
 		</choose>
 		<if test="offset != null and limit != null">
@@ -41,7 +46,7 @@
 	<select id="count" resultType="int">
 		select count(*) from sys_menu
 		<where>
-			<if test="menuId != null and menuId != ''"> and menu_id = #{menuId} </if>
+			<if test="id != null and id != ''"> and id = #{id} </if>
 			<if test="parentId != null and parentId != ''"> and parent_id = #{parentId} </if>
 			<if test="name != null and name != ''"> and name = #{name} </if>
 			<if test="url != null and url != ''"> and url = #{url} </if>
@@ -49,13 +54,15 @@
 			<if test="type != null and type != ''"> and type = #{type} </if>
 			<if test="icon != null and icon != ''"> and icon = #{icon} </if>
 			<if test="orderNum != null and orderNum != ''"> and order_num = #{orderNum} </if>
-			<if test="gmtCreate != null and gmtCreate != ''"> and gmt_create = #{gmtCreate} </if>
-			<if test="gmtModified != null and gmtModified != ''"> and gmt_modified = #{gmtModified} </if>
+			<if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+			<if test="modifyBy != null and modifyBy != ''"> and modify_by = #{modifyBy} </if>
+			<if test="modifyTime != null and modifyTime != ''"> and modify_time = #{modifyTime} </if>
 		</where>
 	</select>
 
-	<insert id="save" parameterType="com.bamboo.sys.domain.MenuDO"
-		useGeneratedKeys="true" keyProperty="menuId">
+	<insert id="create" parameterType="com.bamboo.sys.domain.Menu"
+		useGeneratedKeys="true" keyProperty="id">
 		insert into sys_menu
 		(
 		`parent_id`,
@@ -65,8 +72,10 @@
 		`type`,
 		`icon`,
 		`order_num`,
-		`gmt_create`,
-		`gmt_modified`
+		`create_by`,
+		`create_time`,
+		`modify_by`,
+		`modify_time`
 		)
 		values
 		(
@@ -77,12 +86,14 @@
 		#{type},
 		#{icon},
 		#{orderNum},
-		#{gmtCreate},
-		#{gmtModified}
+		#{createBy},
+		#{createTime},
+		#{modifyBy},
+		#{modifyTime}
 		)
 	</insert>
 
-	<update id="update" parameterType="com.bamboo.sys.domain.MenuDO">
+	<update id="update" parameterType="com.bamboo.sys.domain.Menu">
 		update sys_menu
 		<set>
 			<if test="parentId != null">`parent_id` = #{parentId}, </if>
@@ -92,31 +103,32 @@
 			<if test="type != null">`type` = #{type}, </if>
 			<if test="icon != null">`icon` = #{icon}, </if>
 			<if test="orderNum != null">`order_num` = #{orderNum}, </if>
-			<if test="gmtCreate != null">`gmt_create` = #{gmtCreate}, </if>
-			<if test="gmtModified != null">`gmt_modified` = #{gmtModified}</if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}</if>
+			<if test="modifyBy != null">`modify_by` = #{modifyBy}, </if>
+			<if test="modifyTime != null">`modify_time` = #{modifyTime}</if>
 		</set>
-		where menu_id = #{menuId}
+		where id = #{id}
 	</update>
 
 	<delete id="remove">
-		delete from sys_menu where menu_id = #{value}
+		delete from sys_menu where id = #{value}
 	</delete>
 
 	<delete id="batchRemove">
-		delete from sys_menu where menu_id in
-		<foreach item="menuId" collection="array" open="(" separator=","
+		delete from sys_menu where id in
+		<foreach item="id" collection="array" open="(" separator=","
 			close=")">
-			#{menuId}
+			#{id}
 		</foreach>
 	</delete>
 
-	<select id="listMenuByUserId" resultType="com.bamboo.sys.domain.MenuDO">
+	<select id="listMenuByUserId" resultType="com.bamboo.sys.domain.Menu">
 		select distinct
-		m.menu_id , parent_id, name, url,
-		perms,`type`,icon,order_num,gmt_create, gmt_modified
+		<include refid="Base_Column_List" />
 		from sys_menu m
 		left
-		join sys_role_menu rm on m.menu_id = rm.menu_id left join
+		join sys_role_menu rm on m.id = rm.menu_id left join
 		sys_user_role ur
 		on rm.role_id =ur.role_id where ur.user_id = #{id}
 		and
@@ -128,7 +140,7 @@
 	<select id="listUserPerms" resultType="string">
 		select distinct m.perms
 		from sys_menu m left join
-		sys_role_menu rm on m.menu_id = rm.menu_id
+		sys_role_menu rm on m.id = rm.menu_id
 		left join sys_user_role ur
 		on rm.role_id = ur.role_id where ur.user_id
 		= #{id}

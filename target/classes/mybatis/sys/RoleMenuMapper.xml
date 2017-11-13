@@ -3,12 +3,12 @@
 
 <mapper namespace="com.bamboo.sys.mapper.RoleMenuMapper">
 
-	<select id="get" resultType="com.bamboo.sys.domain.RoleMenuDO">
+	<select id="queryById" resultType="com.bamboo.sys.domain.RoleMenu">
 		select `id`,`role_id`,`menu_id` from
 		sys_role_menu where id = #{value}
 	</select>
 
-	<select id="list" resultType="com.bamboo.sys.domain.RoleMenuDO">
+	<select id="list" resultType="com.bamboo.sys.domain.RoleMenu">
 		select `id`,`role_id`,`menu_id` from sys_role_menu
 		<where>
 			<if test="id != null and id != ''"> and id = #{id} </if>
@@ -37,7 +37,7 @@
 		</where>
 	</select>
 
-	<insert id="save" parameterType="com.bamboo.sys.domain.RoleMenuDO"
+	<insert id="save" parameterType="com.bamboo.sys.domain.RoleMenu"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into sys_role_menu
 		(
@@ -51,7 +51,7 @@
 		)
 	</insert>
 
-	<update id="update" parameterType="com.bamboo.sys.domain.RoleMenuDO">
+	<update id="update" parameterType="com.bamboo.sys.domain.RoleMenu">
 		update sys_role_menu
 		<set>
 			<if test="roleId != null">`role_id` = #{roleId}, </if>

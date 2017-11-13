@@ -1,6 +1,6 @@
 package com.bamboo.sys.domain;
 
-public class RoleMenuDO {
+public class RoleMenu {
 	private Long id;
 	private Long  roleId;
 	private Long menuId;

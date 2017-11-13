@@ -1,7 +1,7 @@
 package com.bamboo.sys.service;
 
 import com.bamboo.common.domain.Tree;
-import com.bamboo.sys.domain.DeptDO;
+import com.bamboo.sys.domain.Dept;
 
 import java.util.List;
 import java.util.Map;
@@ -15,19 +15,19 @@ import java.util.Map;
  */
 public interface SysDeptService {
 	
-	DeptDO get(Long deptId);
+	Dept get(Long deptId);
 	
-	List<DeptDO> list(Map<String, Object> map);
+	List<Dept> list(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);
 	
-	int save(DeptDO sysDept);
+	int save(Dept sysDept);
 	
-	int update(DeptDO sysDept);
+	int update(Dept sysDept);
 	
 	int remove(Long deptId);
 	
 	int batchRemove(Long[] deptIds);
 
-	Tree<DeptDO> getTree();
+	Tree<Dept> getTree();
 }

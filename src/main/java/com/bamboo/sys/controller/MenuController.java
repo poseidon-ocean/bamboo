@@ -18,7 +18,7 @@ import com.bamboo.common.annotation.Log;
 import com.bamboo.common.controller.BaseController;
 import com.bamboo.common.domain.Tree;
 import com.bamboo.common.utils.R;
-import com.bamboo.sys.domain.MenuDO;
+import com.bamboo.sys.domain.Menu;
 import com.bamboo.sys.service.MenuService;
 
 @RequestMapping("/sys/menu")
@@ -37,8 +37,8 @@ public class MenuController extends BaseController {
 	@RequiresPermissions("sys:menu:menu")
 	@RequestMapping("/list")
 	@ResponseBody
-	List<MenuDO> list() {
-		List<MenuDO> menus = menuService.list();
+	List<Menu> list() {
+		List<Menu> menus = menuService.list();
 		return menus;
 	}
 
@@ -67,7 +67,7 @@ public class MenuController extends BaseController {
 	@RequiresPermissions("sys:menu:add")
 	@PostMapping("/save")
 	@ResponseBody
-	R save(MenuDO menu) {
+	R save(Menu menu) {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
@@ -82,7 +82,7 @@ public class MenuController extends BaseController {
 	@RequiresPermissions("sys:menu:edit")
 	@PostMapping("/update")
 	@ResponseBody
-	R update(MenuDO menu) {
+	R update(Menu menu) {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
@@ -110,16 +110,16 @@ public class MenuController extends BaseController {
 
 	@GetMapping("/tree")
 	@ResponseBody
-	Tree<MenuDO> tree() {
-		Tree<MenuDO> tree = new Tree<MenuDO>();
+	Tree<Menu> tree() {
+		Tree<Menu> tree = new Tree<Menu>();
 		tree = menuService.getTree();
 		return tree;
 	}
 
 	@GetMapping("/tree/{roleId}")
 	@ResponseBody
-	Tree<MenuDO> tree(@PathVariable("roleId") Long roleId) {
-		Tree<MenuDO> tree = new Tree<MenuDO>();
+	Tree<Menu> tree(@PathVariable("roleId") Long roleId) {
+		Tree<Menu> tree = new Tree<Menu>();
 		tree = menuService.getTree(roleId);
 		return tree;
 	}

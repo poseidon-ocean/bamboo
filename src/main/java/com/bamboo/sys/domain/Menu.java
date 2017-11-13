@@ -1,12 +1,11 @@
 package com.bamboo.sys.domain;
 
-import java.io.Serializable;
-import java.util.Date;
+import com.bamboo.common.base.BaseEntity;
 
-public class MenuDO implements Serializable {
+public class Menu extends BaseEntity {
+	
 	private static final long serialVersionUID = 1L;
-	//
-	private Long menuId;
+	
 	// 父菜单ID，一级菜单为0
 	private Long parentId;
 	// 菜单名称
@@ -21,24 +20,6 @@ public class MenuDO implements Serializable {
 	private String icon;
 	// 排序
 	private Integer orderNum;
-	// 创建时间
-	private Date gmtCreate;
-	// 修改时间
-	private Date gmtModified;
-
-	/**
-	 * 设置：
-	 */
-	public void setMenuId(Long menuId) {
-		this.menuId = menuId;
-	}
-
-	/**
-	 * 获取：
-	 */
-	public Long getMenuId() {
-		return menuId;
-	}
 
 	/**
 	 * 设置：父菜单ID，一级菜单为0
@@ -138,31 +119,4 @@ public class MenuDO implements Serializable {
 		return orderNum;
 	}
 
-	/**
-	 * 设置：创建时间
-	 */
-	public void setGmtCreate(Date gmtCreate) {
-		this.gmtCreate = gmtCreate;
-	}
-
-	/**
-	 * 获取：创建时间
-	 */
-	public Date getGmtCreate() {
-		return gmtCreate;
-	}
-
-	/**
-	 * 设置：修改时间
-	 */
-	public void setGmtModified(Date gmtModified) {
-		this.gmtModified = gmtModified;
-	}
-
-	/**
-	 * 获取：修改时间
-	 */
-	public Date getGmtModified() {
-		return gmtModified;
-	}
 }

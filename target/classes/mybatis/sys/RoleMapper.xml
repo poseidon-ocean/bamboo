@@ -3,31 +3,35 @@
 
 <mapper namespace="com.bamboo.sys.mapper.RoleMapper">
 
-	<select id="get" resultType="com.bamboo.sys.domain.RoleDO">
-		select
-		`role_id`,`role_name`,`role_sign`,`remark`,`user_id_create`,`gmt_create`,`gmt_modified`
-		from sys_role where role_id = #{value}
+	<sql id="Base_Column_List">
+		`id`,`name`,`sign`,`remark`,
+		`create_by`,`create_time`,`modify_by`,`modify_time`
+	</sql>
+
+	<select id="queryById" resultType="com.bamboo.sys.domain.Role">
+		select <include refid="Base_Column_List" />
+		from sys_role where id = #{value}
 	</select>
 
-	<select id="list" resultType="com.bamboo.sys.domain.RoleDO">
-		select
-		`role_id`,`role_name`,`role_sign`,`remark`,`user_id_create`,`gmt_create`,`gmt_modified`
+	<select id="list" resultType="com.bamboo.sys.domain.Role">
+		select <include refid="Base_Column_List" />
 		from sys_role
 		<where>
-			<if test="roleId != null and roleId != ''"> and role_id = #{roleId} </if>
-			<if test="roleName != null and roleName != ''"> and role_name = #{roleName} </if>
-			<if test="roleSign != null and roleSign != ''"> and role_sign = #{roleSign} </if>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="name != null and name != ''"> and name = #{name} </if>
+			<if test="sign != null and sign != ''"> and sign = #{sign} </if>
 			<if test="remark != null and remark != ''"> and remark = #{remark} </if>
-			<if test="userIdCreate != null and userIdCreate != ''"> and user_id_create = #{userIdCreate} </if>
-			<if test="gmtCreate != null and gmtCreate != ''"> and gmt_create = #{gmtCreate} </if>
-			<if test="gmtModified != null and gmtModified != ''"> and gmt_modified = #{gmtModified} </if>
+			<if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+			<if test="modifyBy != null and modifyBy != ''"> and modify_by = #{modifyBy} </if>
+			<if test="modifyTime != null and modifyTime != ''"> and modify_time = #{modifyTime} </if>
 		</where>
 		<choose>
 			<when test="sort != null and sort.trim() != ''">
 				order by ${sort} ${order}
 			</when>
 			<otherwise>
-				order by role_id desc
+				order by id desc
 			</otherwise>
 		</choose>
 		<if test="offset != null and limit != null">
@@ -38,60 +42,64 @@
 	<select id="count" resultType="int">
 		select count(*) from sys_role
 		<where>
-			<if test="roleId != null and roleId != ''"> and role_id = #{roleId} </if>
-			<if test="roleName != null and roleName != ''"> and role_name = #{roleName} </if>
-			<if test="roleSign != null and roleSign != ''"> and role_sign = #{roleSign} </if>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="name != null and name != ''"> and name = #{name} </if>
+			<if test="sign != null and sign != ''"> and sign = #{sign} </if>
 			<if test="remark != null and remark != ''"> and remark = #{remark} </if>
-			<if test="userIdCreate != null and userIdCreate != ''"> and user_id_create = #{userIdCreate} </if>
-			<if test="gmtCreate != null and gmtCreate != ''"> and gmt_create = #{gmtCreate} </if>
-			<if test="gmtModified != null and gmtModified != ''"> and gmt_modified = #{gmtModified} </if>
+			<if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+			<if test="modifyBy != null and modifyBy != ''"> and modify_by = #{modifyBy} </if>
+			<if test="modifyTime != null and modifyTime != ''"> and modify_time = #{modifyTime} </if>
 		</where>
 	</select>
 
-	<insert id="save" parameterType="com.bamboo.sys.domain.RoleDO"
-		useGeneratedKeys="true" keyProperty="roleId">
+	<insert id="save" parameterType="com.bamboo.sys.domain.Role"
+		useGeneratedKeys="true" keyProperty="id">
 		insert into sys_role
 		(
-		`role_name`,
-		`role_sign`,
+		`name`,
+		`sign`,
 		`remark`,
-		`user_id_create`,
-		`gmt_create`,
-		`gmt_modified`
+		`create_by`,
+		`create_time`,
+		`modify_by`,
+		`modify_time`
 		)
 		values
 		(
-		#{roleName},
-		#{roleSign},
+		#{name},
+		#{sign},
 		#{remark},
-		#{userIdCreate},
-		#{gmtCreate},
-		#{gmtModified}
+		#{createBy},
+		#{createTime},
+		#{modifyBy},
+		#{modifyTime}
 		)
 	</insert>
 
-	<update id="update" parameterType="com.bamboo.sys.domain.RoleDO">
+	<update id="update" parameterType="com.bamboo.sys.domain.Role">
 		update sys_role
 		<set>
-			<if test="roleName != null">`role_name` = #{roleName}, </if>
-			<if test="roleSign != null">`role_sign` = #{roleSign}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="sign != null">`sign` = #{sign}, </if>
 			<if test="remark != null">`remark` = #{remark}, </if>
-			<if test="userIdCreate != null">`user_id_create` = #{userIdCreate}, </if>
-			<if test="gmtCreate != null">`gmt_create` = #{gmtCreate}, </if>
-			<if test="gmtModified != null">`gmt_modified` = #{gmtModified}</if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}</if>
+			<if test="modifyBy != null">`modify_by` = #{modifyBy}, </if>
+			<if test="modifyTime != null">`modify_time` = #{modifyTime}</if>
 		</set>
-		where role_id = #{roleId}
+		where id = #{id}
 	</update>
 
 	<delete id="remove">
-		delete from sys_role where role_id = #{value}
+		delete from sys_role where id = #{value}
 	</delete>
 
 	<delete id="batchRemove">
-		delete from sys_role where role_id in
-		<foreach item="roleId" collection="array" open="(" separator=","
+		delete from sys_role where id in
+		<foreach item="id" collection="array" open="(" separator=","
 			close=")">
-			#{roleId}
+			#{id}
 		</foreach>
 	</delete>
 

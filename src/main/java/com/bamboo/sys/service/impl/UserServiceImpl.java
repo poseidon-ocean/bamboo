@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bamboo.sys.domain.DeptDO;
+import com.bamboo.sys.domain.Dept;
 import com.bamboo.sys.domain.User;
-import com.bamboo.sys.domain.UserRoleDO;
+import com.bamboo.sys.domain.UserRole;
 import com.bamboo.sys.mapper.DeptMapper;
 import com.bamboo.sys.mapper.UserMapper;
 import com.bamboo.sys.mapper.UserRoleMapper;
@@ -31,11 +31,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User get(Long id) {
 		List<Long> roleIds = userRoleMapper.listRoleId(id);
-		User user = userMapper.get(id);
+		User user = userMapper.queryById(id);
 		
 		Long deptId = user.getDeptId();
 		if(Objects.nonNull(deptId)) {
-			DeptDO d = sysDeptMapper.get(user.getDeptId());
+			Dept d = sysDeptMapper.queryById(user.getDeptId());
 			if(Objects.nonNull(d)) {
 				user.setDeptName(d.getName());
 			}
@@ -59,13 +59,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int save(User user) {
 		user.preInsert();
-		int count = userMapper.save(user);
+		int count = userMapper.create(user);
 		Long userId = user.getId();
 		List<Long> roles = user.getroleIds();
 		userRoleMapper.removeByUserId(userId);
-		List<UserRoleDO> list = new ArrayList<>();
+		List<UserRole> list = new ArrayList<>();
 		for (Long roleId : roles) {
-			UserRoleDO ur = new UserRoleDO();
+			UserRole ur = new UserRole();
 			ur.setUserId(userId);
 			ur.setRoleId(roleId);
 			list.add(ur);
@@ -83,9 +83,9 @@ public class UserServiceImpl implements UserService {
 		Long userId = user.getId();
 		List<Long> roles = user.getroleIds();
 		userRoleMapper.removeByUserId(userId);
-		List<UserRoleDO> list = new ArrayList<>();
+		List<UserRole> list = new ArrayList<>();
 		for (Long roleId : roles) {
-			UserRoleDO ur = new UserRoleDO();
+			UserRole ur = new UserRole();
 			ur.setUserId(userId);
 			ur.setRoleId(roleId);
 			list.add(ur);

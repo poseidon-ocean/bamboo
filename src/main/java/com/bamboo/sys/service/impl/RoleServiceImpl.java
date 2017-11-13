@@ -10,8 +10,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bamboo.sys.domain.RoleDO;
-import com.bamboo.sys.domain.RoleMenuDO;
+import com.bamboo.sys.domain.Role;
+import com.bamboo.sys.domain.RoleMenu;
 import com.bamboo.sys.mapper.RoleMapper;
 import com.bamboo.sys.mapper.RoleMenuMapper;
 import com.bamboo.sys.mapper.UserMapper;
@@ -35,21 +35,21 @@ public class RoleServiceImpl implements RoleService {
 	UserRoleMapper userRoleMapper;
 
 	@Override
-	public List<RoleDO> list() {
-		List<RoleDO> roles = roleMapper.list(new HashMap<>());
+	public List<Role> list() {
+		List<Role> roles = roleMapper.list(new HashMap<>());
 		return roles;
 	}
 
 	@Cacheable(value = DEMO_CACHE_NAME, key = ROLE_ALL_KEY)
 	@Override
-	public List<RoleDO> list(Long userId) {
+	public List<Role> list(Long userId) {
 		List<Long> rolesIds = userRoleMapper.listRoleId(userId);
-		List<RoleDO> roles = roleMapper.list(new HashMap<>());
-		for (RoleDO roleDO : roles) {
-			roleDO.setRoleSign("false");
+		List<Role> roles = roleMapper.list(new HashMap<>());
+		for (Role roleDO : roles) {
+			roleDO.setSign("false");
 			for (Long roleId : rolesIds) {
-				if (roleDO.getRoleId() == roleId) {
-					roleDO.setRoleSign("true");
+				if (roleDO.getId() == roleId) {
+					roleDO.setSign("true");
 					break;
 				}
 			}
@@ -59,13 +59,13 @@ public class RoleServiceImpl implements RoleService {
 
 	@Transactional
 	@Override
-	public int save(RoleDO role) {
-		int count = roleMapper.save(role);
+	public int save(Role role) {
+		int count = roleMapper.create(role);
 		List<Long> menuIds = role.getMenuIds();
-		Long roleId = role.getRoleId();
-		List<RoleMenuDO> rms = new ArrayList<>();
+		Long roleId = role.getId();
+		List<RoleMenu> rms = new ArrayList<>();
 		for (Long menuId : menuIds) {
-			RoleMenuDO rmDo = new RoleMenuDO();
+			RoleMenu rmDo = new RoleMenu();
 			rmDo.setRoleId(roleId);
 			rmDo.setMenuId(menuId);
 			rms.add(rmDo);
@@ -87,21 +87,21 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public RoleDO get(Long id) {
-		RoleDO roleDO = roleMapper.get(id);
+	public Role get(Long id) {
+		Role roleDO = roleMapper.queryById(id);
 		return roleDO;
 	}
 
 	@CacheEvict(value = DEMO_CACHE_NAME)
 	@Override
-	public int update(RoleDO role) {
+	public int update(Role role) {
 		int r = roleMapper.update(role);
 		List<Long> menuIds = role.getMenuIds();
-		Long roleId = role.getRoleId();
+		Long roleId = role.getId();
 		roleMenuMapper.removeByRoleId(roleId);
-		List<RoleMenuDO> rms = new ArrayList<>();
+		List<RoleMenu> rms = new ArrayList<>();
 		for (Long menuId : menuIds) {
-			RoleMenuDO rmDo = new RoleMenuDO();
+			RoleMenu rmDo = new RoleMenu();
 			rmDo.setRoleId(roleId);
 			rmDo.setMenuId(menuId);
 			rms.add(rmDo);

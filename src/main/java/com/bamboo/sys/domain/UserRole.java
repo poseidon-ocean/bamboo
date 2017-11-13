@@ -1,6 +1,6 @@
 package com.bamboo.sys.domain;
 
-public class UserRoleDO {
+public class UserRole {
 	private Long id;
 	private Long userId;
 	private Long roleId;

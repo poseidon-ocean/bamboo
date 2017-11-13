@@ -8,7 +8,7 @@
 		`create_by`,`create_time`,`modify_by`,`modify_time`
 	</sql>
 
-	<select id="get" resultType="com.bamboo.sys.domain.User">
+	<select id="queryById" resultType="com.bamboo.sys.domain.User">
 		select <include refid="Base_Column_List" />
 		from sys_user where id = #{value}
 	</select>

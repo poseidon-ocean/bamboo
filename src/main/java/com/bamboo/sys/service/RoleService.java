@@ -4,20 +4,20 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.bamboo.sys.domain.RoleDO;
+import com.bamboo.sys.domain.Role;
 
 @Service
 public interface RoleService {
 
-	RoleDO get(Long id);
+	Role get(Long id);
 
-	List<RoleDO> list();
+	List<Role> list();
 
-	int save(RoleDO role);
+	int save(Role role);
 
-	int update(RoleDO role);
+	int update(Role role);
 
 	int remove(Long id);
 
-	List<RoleDO> list(Long userId);
+	List<Role> list(Long userId);
 }

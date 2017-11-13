@@ -1,79 +1,57 @@
-var prefix = "/sys/role"
+var Role = {
+    id : "columnTable",//表格id
+    prefix : "/sys/role"
+};
+
 $(function() {
-	load();
+	var defaultColunms = Role.initColumn();
+    var table = new BSTable(Role.id, Role.prefix + "/list", defaultColunms);
+   // table.setPaginationType("client");
+    Role.table = table.init();
 });
 
-function load() {
-	$('#exampleTable')
-			.bootstrapTable(
-					{
-						method : 'get', // 服务器数据的请求方式 get or post
-						url : prefix + "/list", // 服务器数据的加载地址
-						striped : true, // 设置为true会有隔行变色效果
-						dataType : "json", // 服务器返回的数据类型
-						pagination : true, // 设置为true会在底部显示分页条
-						// queryParamsType : "limit",
-						// //设置为limit则会发送符合RESTFull格式的参数
-						singleSelect : false, // 设置为true将禁止多选
-						iconSize : 'outline',
-						toolbar : '#exampleToolbar',
-						// contentType : "application/x-www-form-urlencoded",
-						// //发送到服务器的数据编码类型
-						pageSize : 10, // 如果设置了分页，每页数据条数
-						pageNumber : 1, // 如果设置了分布，首页页码
-						search : true, // 是否显示搜索框
-						showColumns : true, // 是否显示内容下拉框（选择显示的列）
-						sidePagination : "client", // 设置在哪里进行分页，可选值为"client" 或者
-						// "server"
-						// queryParams : queryParams,
-						// //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
-						// queryParamsType = 'limit' ,返回参数必须包含
-						// limit, offset, search, sort, order 否则, 需要包含:
-						// pageSize, pageNumber, searchText, sortName,
-						// sortOrder.
-						// 返回false将会终止请求
-						columns : [
-								{ // 列配置项
-									// 数据类型，详细参数配置参见文档http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/
-									checkbox : true
-								// 列表中显示复选框
-								},
-								{
-									field : 'roleId', // 列字段名
-									title : '序号' // 列标题
-								},
-								{
-									field : 'roleName',
-									title : '角色名'
-								},
-								{
-									field : 'remark',
-									title : '备注'
-								},
-								{
-									field : '',
-									title : '权限'
-								},
-								{
-									title : '操作',
-									field : 'roleId',
-									align : 'center',
-									formatter : function(value, row, index) {
-										var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'" href="#" mce_href="#" title="编辑" onclick="edit(\''
-												+ row.roleId
-												+ '\')"><i class="fa fa-edit"></i></a> ';
-										var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
-												+ row.roleId
-												+ '\')"><i class="fa fa-remove"></i></a> ';
-										return e + d;
-									}
-								} ]
-					});
+/**
+ * 初始化表格列
+ */
+Role.initColumn = function(){
+	var columns = [
+		 {checkbox : true },
+		 {title: '序号', formatter: Role.formatIndex},
+	     {title: '角色名', field: 'name', align: 'center', valign: 'middle', sortable: true},
+	     {title: '备注', field: 'remark', align: 'center', valign: 'middle', sortable: true},
+	     {title: '创建时间', field: 'createBy', align: 'center', valign: 'middle', sortable: true},
+	     {title: '创建时间', field: 'createTime', align: 'center', valign: 'middle'},
+	     {title: '操作', field: 'id', align: 'center', valign: 'middle', formatter: Role.formatOper}
+	];
+	
+	return columns;
 }
-function reLoad() {
-	$('#exampleTable').bootstrapTable('refresh');
+
+/**
+ * 格式序号
+ */
+Role.formatIndex = function(value, row, index){
+	return index + 1;
 }
-function add() {
+
+/**
+ * 格式操作
+ */
+Role.formatOper = function(value, row, index){
+	var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'" href="#" mce_href="#" title="编辑" onclick="Role.edit(\''
+		+ row.id
+		+ '\')"><i class="fa fa-edit"></i></a> ';
+	var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="Role.remove(\''
+		+ row.id
+		+ '\')"><i class="fa fa-remove"></i></a> ';
+	return e + d;
+}
+
+Role.reLoad = function() {
+	$('#' + Role.id).bootstrapTable('refresh');
+}
+
+Role.add = function() {
 	// iframe层
 	layer.open({
 		type : 2,
@@ -81,15 +59,16 @@ function add() {
 		maxmin : true,
 		shadeClose : false, // 点击遮罩关闭层
 		area : [ '800px', '520px' ],
-		content : prefix + '/add' // iframe的url
+		content : Role.prefix + '/add' // iframe的url
 	});
 }
-function remove(id) {
+
+Role.remove = function(id){
 	layer.confirm('确定要删除选中的记录？', {
 		btn : [ '确定', '取消' ]
 	}, function() {
 		$.ajax({
-			url : prefix + "/remove",
+			url : Role.prefix + "/remove",
 			type : "post",
 			data : {
 				'id' : id
@@ -97,7 +76,7 @@ function remove(id) {
 			success : function(r) {
 				if (r.code === 0) {
 					layer.msg("删除成功");
-					reLoad();
+					Role.reLoad();
 				} else {
 					layer.msg(r.msg);
 				}
@@ -106,17 +85,19 @@ function remove(id) {
 	})
 
 }
-function edit(id) {
+
+Role.edit = function(id) {
 	layer.open({
 		type : 2,
 		title : '角色修改',
 		maxmin : true,
 		shadeClose : true, // 点击遮罩关闭层
 		area : [ '800px', '520px' ],
-		content : prefix + '/edit/' + id // iframe的url
+		content : Role.prefix + '/edit/' + id // iframe的url
 	});
 }
-function batchRemove() {
+
+Role.batchRemove() = function{
 	// var rows = $('#exampleTable').bootstrapTable('getSelections');
 
 }
