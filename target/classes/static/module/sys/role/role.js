@@ -1,5 +1,6 @@
 var Role = {
     id : "columnTable",//表格id
+    layerIndex : -1,
     prefix : "/sys/role"
 };
 
@@ -19,7 +20,7 @@ Role.initColumn = function(){
 		 {title: '序号', formatter: Role.formatIndex},
 	     {title: '角色名', field: 'name', align: 'center', valign: 'middle', sortable: true},
 	     {title: '备注', field: 'remark', align: 'center', valign: 'middle', sortable: true},
-	     {title: '创建时间', field: 'createBy', align: 'center', valign: 'middle', sortable: true},
+	     {title: '创建人', field: 'createBy', align: 'center', valign: 'middle', sortable: true},
 	     {title: '创建时间', field: 'createTime', align: 'center', valign: 'middle'},
 	     {title: '操作', field: 'id', align: 'center', valign: 'middle', formatter: Role.formatOper}
 	];
@@ -97,7 +98,7 @@ Role.edit = function(id) {
 	});
 }
 
-Role.batchRemove() = function{
+Role.batchRemove = function(){
 	// var rows = $('#exampleTable').bootstrapTable('getSelections');
 
 }

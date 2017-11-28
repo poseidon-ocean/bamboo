@@ -1,6 +1,7 @@
 package com.bamboo.common.base;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,7 +30,7 @@ public abstract class BaseService <D extends BaseMapper <T>, T extends BaseEntit
      * @param entity
      * @return
      */
-    public List<T> queryList (T entity) throws Exception{
+    public List<T> queryList (T entity){
         return mapper.queryList(entity);
     }
 
@@ -38,8 +39,27 @@ public abstract class BaseService <D extends BaseMapper <T>, T extends BaseEntit
      * @param entity
      * @return
      */
-    public boolean delete (Long id) throws Exception{
+    public boolean delete (Long id){
         int res = mapper.remove(id);
         return res > 0;
     }
+    
+    /**
+     * 按条件查询列表信息
+     * @param map
+     * @return
+     */
+    public List<T> list(Map<String, Object> map){
+    	return mapper.list(map);
+    }
+    
+    /**
+     * 按条件统计数量
+     * @param map
+     * @return
+     */
+    public int count(Map<String, Object> map) {
+		return mapper.count(map);
+	}
+    
 }

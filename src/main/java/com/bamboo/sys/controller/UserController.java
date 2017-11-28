@@ -1,5 +1,6 @@
 package com.bamboo.sys.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,8 +38,8 @@ public class UserController extends BaseController {
 		return "sys/user/user";
 	}
 
-	@RequestMapping("/list")
 	@ResponseBody
+	@RequestMapping("/list")
 	PageUtils list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Query query = new Query(params);
@@ -52,7 +53,7 @@ public class UserController extends BaseController {
 	@Log("添加用户")
 	@RequestMapping("/add")
 	String add(Model model) {
-		List<Role> roles = roleService.list();
+		List<Role> roles = roleService.list(new HashMap<>());
 		model.addAttribute("roles", roles);
 		return "sys/user/userAdd";
 	}
