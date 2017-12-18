@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
-import com.bamboo.common.dao.FileDao;
-import com.bamboo.common.domain.FileDO;
+import com.bamboo.common.domain.SysFile;
+import com.bamboo.common.mapper.FileMapper;
 import com.bamboo.common.service.SysFileService;
 
 
@@ -15,15 +15,15 @@ import com.bamboo.common.service.SysFileService;
 @Service
 public class FileServiceImpl implements SysFileService {
 	@Autowired
-	private FileDao sysFileMapper;
+	private FileMapper sysFileMapper;
 	
 	@Override
-	public FileDO get(Long id){
-		return sysFileMapper.get(id);
+	public SysFile get(Long id){
+		return sysFileMapper.queryById(id);
 	}
 	
 	@Override
-	public List<FileDO> list(Map<String, Object> map){
+	public List<SysFile> list(Map<String, Object> map){
 		return sysFileMapper.list(map);
 	}
 	
@@ -33,12 +33,12 @@ public class FileServiceImpl implements SysFileService {
 	}
 	
 	@Override
-	public int save(FileDO sysFile){
-		return sysFileMapper.save(sysFile);
+	public int save(SysFile sysFile){
+		return sysFileMapper.create(sysFile);
 	}
 	
 	@Override
-	public int update(FileDO sysFile){
+	public int update(SysFile sysFile){
 		return sysFileMapper.update(sysFile);
 	}
 	

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.bamboo.common.dao.DictDao">
+<mapper namespace="com.bamboo.common.mapper.DictMapper">
 
-	<select id="get" resultType="com.bamboo.common.domain.DictDO">
+	<select id="get" resultType="com.bamboo.common.domain.Dict">
 		select
-		`id`,`name`,`value`,`type`,`description`,`sort`,`parent_id`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`
+		`id`,`name`,`value`,`type`,`description`,`sort`,`parent_id`,`create_by`,`create_time`,`modify_by`,`modify_time`,`remarks`,`del_flag`
 		from sys_dict where id = #{value}
 	</select>
 
-	<select id="list" resultType="com.bamboo.common.domain.DictDO">
+	<select id="list" resultType="com.bamboo.common.domain.Dict">
 		select
-		`id`,`name`,`value`,`type`,`description`,`sort`,`parent_id`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`
+		`id`,`name`,`value`,`type`,`description`,`sort`,`parent_id`,`create_by`,`create_time`,`modify_by`,`modify_time`,`remarks`,`del_flag`
 		from sys_dict
 		<where>
 			<if test="id != null and id != ''"> and id = #{id} </if>
@@ -22,9 +22,9 @@
 			<if test="sort != null and sort != ''"> and sort = #{sort} </if>
 			<if test="parentId != null and parentId != ''"> and parent_id = #{parentId} </if>
 			<if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
-			<if test="createDate != null and createDate != ''"> and create_date = #{createDate} </if>
-			<if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
-			<if test="updateDate != null and updateDate != ''"> and update_date = #{updateDate} </if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+			<if test="modifyBy != null and modifyBy != ''"> and modify_by = #{modifyBy} </if>
+			<if test="modifyTime != null and modifyTime != ''"> and modify_time = #{modifyTime} </if>
 			<if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
 			<if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
 		</where>
@@ -52,15 +52,15 @@
 			<if test="sort != null and sort != ''"> and sort = #{sort} </if>
 			<if test="parentId != null and parentId != ''"> and parent_id = #{parentId} </if>
 			<if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
-			<if test="createDate != null and createDate != ''"> and create_date = #{createDate} </if>
-			<if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
-			<if test="updateDate != null and updateDate != ''"> and update_date = #{updateDate} </if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+			<if test="modifyBy != null and modifyBy != ''"> and modify_by = #{modifyBy} </if>
+			<if test="modifyTime != null and modifyTime != ''"> and modify_time = #{modifyTime} </if>
 			<if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
 			<if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
 		</where>
 	</select>
 
-	<insert id="save" parameterType="com.bamboo.common.domain.DictDO"
+	<insert id="create" parameterType="com.bamboo.common.domain.Dict"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into sys_dict
 		(
@@ -71,9 +71,9 @@
 		`sort`,
 		`parent_id`,
 		`create_by`,
-		`create_date`,
-		`update_by`,
-		`update_date`,
+		`create_time`,
+		`modify_by`,
+		`modify_time`,
 		`remarks`,
 		`del_flag`
 		)
@@ -86,15 +86,15 @@
 		#{sort},
 		#{parentId},
 		#{createBy},
-		#{createDate},
-		#{updateBy},
-		#{updateDate},
+		#{createTime},
+		#{modifyBy},
+		#{modifyTime},
 		#{remarks},
 		#{delFlag}
 		)
 	</insert>
 
-	<update id="update" parameterType="com.bamboo.common.domain.DictDO">
+	<update id="update" parameterType="com.bamboo.common.domain.Dict">
 		update sys_dict
 		<set>
 			<if test="name != null">`name` = #{name}, </if>
@@ -104,9 +104,9 @@
 			<if test="sort != null">`sort` = #{sort}, </if>
 			<if test="parentId != null">`parent_id` = #{parentId}, </if>
 			<if test="createBy != null">`create_by` = #{createBy}, </if>
-			<if test="createDate != null">`create_date` = #{createDate}, </if>
-			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
-			<if test="updateDate != null">`update_date` = #{updateDate}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="modifyBy != null">`modify_by` = #{modifyBy}, </if>
+			<if test="modifyTime != null">`modify_time` = #{modifyTime}, </if>
 			<if test="remarks != null">`remarks` = #{remarks}, </if>
 			<if test="delFlag != null">`del_flag` = #{delFlag}</if>
 		</set>
@@ -125,7 +125,7 @@
 		</foreach>
 	</delete>
 
-	<select id="listType" resultType="com.bamboo.common.domain.DictDO">
+	<select id="listType" resultType="com.bamboo.common.domain.Dict">
 		select distinct `type` , description from sys_dict
 	</select>
 

@@ -9,7 +9,7 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bamboo.common.dao.GeneratorMapper;
+import com.bamboo.common.mapper.GeneratorMapper;
 import com.bamboo.common.service.GeneratorService;
 import com.bamboo.common.utils.GenUtils;
 

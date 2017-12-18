@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.bamboo.common.dao.TaskDao;
 import com.bamboo.common.domain.ScheduleJob;
-import com.bamboo.common.domain.TaskDO;
+import com.bamboo.common.domain.SysTask;
+import com.bamboo.common.mapper.TaskMapper;
 import com.bamboo.common.quartz.utils.QuartzManager;
 import com.bamboo.common.service.TaskScheduleJobService;
 import com.bamboo.common.utils.ScheduleJobUtils;
@@ -19,16 +19,16 @@ import com.bamboo.common.utils.ScheduleJobUtils;
 public class JobServiceImpl implements TaskScheduleJobService {
 	
 	@Autowired
-	private TaskDao taskScheduleJobMapper;
+	private TaskMapper taskScheduleJobMapper;
 
 
 	@Override
-	public TaskDO get(Long id) {
-		return taskScheduleJobMapper.get(id);
+	public SysTask get(Long id) {
+		return taskScheduleJobMapper.queryById(id);
 	}
 
 	@Override
-	public List<TaskDO> list(Map<String, Object> map) {
+	public List<SysTask> list(Map<String, Object> map) {
 		return taskScheduleJobMapper.list(map);
 	}
 
@@ -38,12 +38,12 @@ public class JobServiceImpl implements TaskScheduleJobService {
 	}
 
 	@Override
-	public int save(TaskDO taskScheduleJob) {
-		return taskScheduleJobMapper.save(taskScheduleJob);
+	public int save(SysTask taskScheduleJob) {
+		return taskScheduleJobMapper.create(taskScheduleJob);
 	}
 
 	@Override
-	public int update(TaskDO taskScheduleJob) {
+	public int update(SysTask taskScheduleJob) {
 		return taskScheduleJobMapper.update(taskScheduleJob);
 	}
 
@@ -51,7 +51,7 @@ public class JobServiceImpl implements TaskScheduleJobService {
 	public int remove(Long id) {
 		QuartzManager quartzManager = new QuartzManager();
 		try {
-			TaskDO scheduleJob = get(id);
+			SysTask scheduleJob = get(id);
 			quartzManager.deleteJob(ScheduleJobUtils.entityToData(scheduleJob));
 			return taskScheduleJobMapper.remove(id);
 		} catch (SchedulerException e) {
@@ -66,7 +66,7 @@ public class JobServiceImpl implements TaskScheduleJobService {
 		QuartzManager quartzManager = new QuartzManager();
 		for (Long id : ids) {
 			try {
-				TaskDO scheduleJob = get(id);
+				SysTask scheduleJob = get(id);
 				quartzManager.deleteJob(ScheduleJobUtils.entityToData(scheduleJob));
 			} catch (SchedulerException e) {
 				e.printStackTrace();
@@ -80,15 +80,15 @@ public class JobServiceImpl implements TaskScheduleJobService {
 	public void initSchedule() throws SchedulerException {
 		// 这里获取任务信息数据
 		QuartzManager quartzManager = new QuartzManager();
-		List<TaskDO> jobList = taskScheduleJobMapper.list(new HashMap());
-		for (TaskDO scheduleJob : jobList) {
+		List<SysTask> jobList = taskScheduleJobMapper.list(new HashMap<String,Object>());
+		for (SysTask scheduleJob : jobList) {
 			quartzManager.addJob(ScheduleJobUtils.entityToData(scheduleJob));
 		}
 	}
 	@Override
 	public void changeStatus(Long jobId, String cmd) throws SchedulerException {
 		QuartzManager quartzManager = new QuartzManager();
-		TaskDO scheduleJob = get(jobId);
+		SysTask scheduleJob = get(jobId);
 		if (scheduleJob == null) {
 			return;
 		}
@@ -105,7 +105,7 @@ public class JobServiceImpl implements TaskScheduleJobService {
 	@Override
 	public void updateCron(Long jobId) throws SchedulerException {
 		QuartzManager quartzManager = new QuartzManager();
-		TaskDO scheduleJob = get(jobId);
+		SysTask scheduleJob = get(jobId);
 		if (scheduleJob == null) {
 			return;
 		}

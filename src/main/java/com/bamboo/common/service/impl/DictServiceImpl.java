@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
-import com.bamboo.common.dao.DictDao;
-import com.bamboo.common.domain.DictDO;
+import com.bamboo.common.domain.Dict;
+import com.bamboo.common.mapper.DictMapper;
 import com.bamboo.common.service.SysDictService;
 
 
@@ -15,15 +15,15 @@ import com.bamboo.common.service.SysDictService;
 @Service
 public class DictServiceImpl implements SysDictService {
 	@Autowired
-	private DictDao sysDictMapper;
+	private DictMapper sysDictMapper;
 	
 	@Override
-	public DictDO get(Long id){
-		return sysDictMapper.get(id);
+	public Dict get(Long id){
+		return sysDictMapper.queryById(id);
 	}
 	
 	@Override
-	public List<DictDO> list(Map<String, Object> map){
+	public List<Dict> list(Map<String, Object> map){
 		return sysDictMapper.list(map);
 	}
 	
@@ -33,12 +33,12 @@ public class DictServiceImpl implements SysDictService {
 	}
 	
 	@Override
-	public int save(DictDO sysDict){
-		return sysDictMapper.save(sysDict);
+	public int save(Dict sysDict){
+		return sysDictMapper.create(sysDict);
 	}
 	
 	@Override
-	public int update(DictDO sysDict){
+	public int update(Dict sysDict){
 		return sysDictMapper.update(sysDict);
 	}
 	
@@ -54,7 +54,7 @@ public class DictServiceImpl implements SysDictService {
 	
 	@Override
 	
-	public List<DictDO> listType(){
+	public List<Dict> listType(){
 		return sysDictMapper.listType();
 	};
 	

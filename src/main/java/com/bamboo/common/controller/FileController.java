@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bamboo.common.config.BambooConfig;
-import com.bamboo.common.domain.FileDO;
+import com.bamboo.common.domain.SysFile;
 import com.bamboo.common.service.SysFileService;
 import com.bamboo.common.utils.FileType;
 import com.bamboo.common.utils.FileUtil;
@@ -31,9 +31,6 @@ import com.bamboo.common.utils.R;
 /**
  * 文件上传
  * 
- * @author chglee
- * @email 1992lcg@163.com
- * @date 2017-09-19 16:02:20
  */
 @Controller
 @RequestMapping("/common/sysFile")
@@ -58,7 +55,7 @@ public class FileController extends BaseController {
 	public PageUtils list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Query query = new Query(params);
-		List<FileDO> sysFileList = sysFileService.list(query);
+		List<SysFile> sysFileList = sysFileService.list(query);
 		int total = sysFileService.count(query);
 		PageUtils pageUtils = new PageUtils(sysFileList, total);
 		return pageUtils;
@@ -73,7 +70,7 @@ public class FileController extends BaseController {
 	@GetMapping("/edit")
 	// @RequiresPermissions("common:bComments")
 	String edit(Long id, Model model) {
-		FileDO sysFile = sysFileService.get(id);
+		SysFile sysFile = sysFileService.get(id);
 		model.addAttribute("sysFile", sysFile);
 		return "common/sysFile/edit";
 	}
@@ -84,7 +81,7 @@ public class FileController extends BaseController {
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("common:info")
 	public R info(@PathVariable("id") Long id) {
-		FileDO sysFile = sysFileService.get(id);
+		SysFile sysFile = sysFileService.get(id);
 		return R.ok().put("sysFile", sysFile);
 	}
 
@@ -94,7 +91,7 @@ public class FileController extends BaseController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("common:save")
-	public R save(FileDO sysFile) {
+	public R save(SysFile sysFile) {
 		if (sysFileService.save(sysFile) > 0) {
 			return R.ok();
 		}
@@ -106,7 +103,7 @@ public class FileController extends BaseController {
 	 */
 	@RequestMapping("/update")
 	@RequiresPermissions("common:update")
-	public R update(@RequestBody FileDO sysFile) {
+	public R update(@RequestBody SysFile sysFile) {
 		sysFileService.update(sysFile);
 
 		return R.ok();
@@ -156,7 +153,7 @@ public class FileController extends BaseController {
 		}
 		String fileName = file.getOriginalFilename();
 		fileName = FileUtil.RenameToUUID(fileName);
-		FileDO sysFile = new FileDO(FileType.fileType(fileName), "/files/" + fileName, new Date());
+		SysFile sysFile = new SysFile(FileType.fileType(fileName), "/files/" + fileName, new Date());
 		try {
 			FileUtil.uploadFile(file.getBytes(), bambooConfig.getUploadPath(), fileName);
 		} catch (Exception e) {

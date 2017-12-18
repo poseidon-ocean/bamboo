@@ -37,7 +37,7 @@
 		</where>
 	</select>
 
-	<insert id="save" parameterType="com.bamboo.sys.domain.UserRole"
+	<insert id="create" parameterType="com.bamboo.sys.domain.UserRole"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into sys_user_role
 		(

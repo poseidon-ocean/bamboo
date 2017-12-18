@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bamboo.common.domain.TaskDO;
+import com.bamboo.common.domain.SysTask;
 import com.bamboo.common.service.TaskScheduleJobService;
 import com.bamboo.common.utils.PageUtils;
 import com.bamboo.common.utils.Query;
@@ -47,7 +47,7 @@ public class JobController extends BaseController{
 	public PageUtils list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Query query = new Query(params);
-		List<TaskDO> taskScheduleJobList = taskScheduleJobService.list(query);
+		List<SysTask> taskScheduleJobList = taskScheduleJobService.list(query);
 		int total = taskScheduleJobService.count(query);
 		PageUtils pageUtils = new PageUtils(taskScheduleJobList, total);
 		return pageUtils;
@@ -60,7 +60,7 @@ public class JobController extends BaseController{
 
 	@GetMapping("/edit/{id}")
 	String edit(@PathVariable("id") Long id, Model model) {
-		TaskDO taskScheduleJob = taskScheduleJobService.get(id);
+		SysTask taskScheduleJob = taskScheduleJobService.get(id);
 		model.addAttribute("TaskScheduleJob", taskScheduleJob);
 		return "common/taskScheduleJob/edit";
 	}
@@ -70,7 +70,7 @@ public class JobController extends BaseController{
 	 */
 	@RequestMapping("/info/{id}")
 	public R info(@PathVariable("id") Long id) {
-		TaskDO taskScheduleJob = taskScheduleJobService.get(id);
+		SysTask taskScheduleJob = taskScheduleJobService.get(id);
 		return R.ok().put("taskScheduleJob", taskScheduleJob);
 	}
 
@@ -79,7 +79,7 @@ public class JobController extends BaseController{
 	 */
 	@ResponseBody
 	@PostMapping("/save")
-	public R save(TaskDO taskScheduleJob) {
+	public R save(SysTask taskScheduleJob) {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
@@ -93,7 +93,7 @@ public class JobController extends BaseController{
 	 * 修改
 	 */
 	@RequestMapping("/update")
-	public R update(@RequestBody TaskDO taskScheduleJob) {
+	public R update(@RequestBody SysTask taskScheduleJob) {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}

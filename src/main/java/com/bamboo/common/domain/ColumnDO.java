@@ -3,9 +3,6 @@ package com.bamboo.common.domain;
 /**
  * 列的属性
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年12月20日 上午12:01:45
  */
 public class ColumnDO {
 	//列名

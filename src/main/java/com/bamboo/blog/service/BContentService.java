@@ -3,7 +3,7 @@ package com.bamboo.blog.service;
 import java.util.List;
 import java.util.Map;
 
-import com.bamboo.blog.domain.ContentDO;
+import com.bamboo.blog.domain.BlogContent;
 
 /**
  * 文章内容
@@ -14,15 +14,15 @@ import com.bamboo.blog.domain.ContentDO;
  */
 public interface BContentService {
 	
-	ContentDO get(Long cid);
+	BlogContent get(Long cid);
 	
-	List<ContentDO> list(Map<String, Object> map);
+	List<BlogContent> list(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);
 	
-	int save(ContentDO bContent);
+	int save(BlogContent bContent);
 	
-	int update(ContentDO bContent);
+	int update(BlogContent bContent);
 	
 	int remove(Long cid);
 	

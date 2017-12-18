@@ -66,12 +66,14 @@ public class MenuServiceImpl implements MenuService {
 
 	@Override
 	public int save(Menu menu) {
+		menu.preInsert();
 		int r = menuMapper.create(menu);
 		return r;
 	}
 
 	@Override
 	public int update(Menu menu) {
+		menu.preUpadate();
 		int r = menuMapper.update(menu);
 		return r;
 	}

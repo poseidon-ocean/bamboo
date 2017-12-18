@@ -1,6 +1,6 @@
 package com.bamboo.common.service;
 
-import com.bamboo.common.domain.TaskDO;
+import com.bamboo.common.domain.SysTask;
 
 import java.util.List;
 import java.util.Map;
@@ -16,15 +16,15 @@ import org.quartz.SchedulerException;
  */
 public interface TaskScheduleJobService {
 	
-	TaskDO get(Long id);
+	SysTask get(Long id);
 	
-	List<TaskDO> list(Map<String, Object> map);
+	List<SysTask> list(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);
 	
-	int save(TaskDO taskScheduleJob);
+	int save(SysTask taskScheduleJob);
 	
-	int update(TaskDO taskScheduleJob);
+	int update(SysTask taskScheduleJob);
 	
 	int remove(Long id);
 	

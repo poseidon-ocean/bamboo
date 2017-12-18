@@ -6,24 +6,25 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
-import com.bamboo.blog.dao.ContentDao;
-import com.bamboo.blog.domain.ContentDO;
+import com.bamboo.blog.domain.BlogContent;
+import com.bamboo.blog.mapper.ContentMapper;
 import com.bamboo.blog.service.BContentService;
 
 
 
 @Service
 public class BContentServiceImpl implements BContentService {
+	
 	@Autowired
-	private ContentDao bContentMapper;
+	private ContentMapper bContentMapper;
 	
 	@Override
-	public ContentDO get(Long cid){
-		return bContentMapper.get(cid);
+	public BlogContent get(Long cid){
+		return bContentMapper.queryById(cid);
 	}
 	
 	@Override
-	public List<ContentDO> list(Map<String, Object> map){
+	public List<BlogContent> list(Map<String, Object> map){
 		return bContentMapper.list(map);
 	}
 	
@@ -33,12 +34,12 @@ public class BContentServiceImpl implements BContentService {
 	}
 	
 	@Override
-	public int save(ContentDO bContent){
-		return bContentMapper.save(bContent);
+	public int save(BlogContent bContent){
+		return bContentMapper.create(bContent);
 	}
 	
 	@Override
-	public int update(ContentDO bContent){
+	public int update(BlogContent bContent){
 		return bContentMapper.update(bContent);
 	}
 	

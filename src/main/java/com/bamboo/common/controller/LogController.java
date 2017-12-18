@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bamboo.common.domain.LogDO;
+import com.bamboo.common.domain.SysLog;
 import com.bamboo.common.domain.PageDO;
 import com.bamboo.common.service.LogService;
 import com.bamboo.common.utils.Query;
@@ -34,9 +34,9 @@ public class LogController {
 
 	@ResponseBody
 	@GetMapping("/list")
-	PageDO<LogDO> list(@RequestParam Map<String, Object> params) {
+	PageDO<SysLog> list(@RequestParam Map<String, Object> params) {
 		Query query = new Query(params);
-		PageDO<LogDO> page = logService.queryList(query);
+		PageDO<SysLog> page = logService.queryList(query);
 		return page;
 	}
 	

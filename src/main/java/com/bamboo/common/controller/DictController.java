@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bamboo.common.domain.DictDO;
+import com.bamboo.common.domain.Dict;
 import com.bamboo.common.service.SysDictService;
 import com.bamboo.common.utils.PageUtils;
 import com.bamboo.common.utils.Query;
@@ -47,7 +47,7 @@ public class DictController extends BaseController{
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
-		List<DictDO> sysDictList = sysDictService.list(query);
+		List<Dict> sysDictList = sysDictService.list(query);
 		int total = sysDictService.count(query);
 		PageUtils pageUtils = new PageUtils(sysDictList, total);
 		return pageUtils;
@@ -62,7 +62,7 @@ public class DictController extends BaseController{
 	@GetMapping("/edit/{id}")
 	@RequiresPermissions("common:sysDict:edit")
 	String edit(@PathVariable("id") Long id,Model model){
-		DictDO sysDict = sysDictService.get(id);
+		Dict sysDict = sysDictService.get(id);
 		model.addAttribute("sysDict", sysDict);
 	    return "common/sysDict/edit";
 	}
@@ -73,7 +73,7 @@ public class DictController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("common:sysDict:add")
-	public R save( DictDO sysDict){
+	public R save( Dict sysDict){
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
@@ -88,7 +88,7 @@ public class DictController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("common:sysDict:edit")
-	public R update( DictDO sysDict){
+	public R update( Dict sysDict){
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
@@ -128,7 +128,7 @@ public class DictController extends BaseController{
 	
 	@GetMapping( "/type")
 	@ResponseBody
-	public List<DictDO> listType(){
+	public List<Dict> listType(){
 		return sysDictService.listType();
 	};
 	//类别已经指定增加

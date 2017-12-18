@@ -27,7 +27,7 @@ function getAllSelectNodes() {
 	menuIds = ref.get_selected(); // 获得所有选中节点，返回值为数组
 }
 function getMenuTreeData() {
-	var roleId = $('#roleId').val();
+	var roleId = $('#id').val();
 	$.ajax({
 		type : "GET",
 		url : "/sys/menu/tree/" + roleId,

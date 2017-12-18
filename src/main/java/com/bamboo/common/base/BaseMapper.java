@@ -44,7 +44,7 @@ public interface BaseMapper<T> {
      * @return
      */
     int create(T entity);
-
+    
     /**
      * 执行更新操作
      * @param entity

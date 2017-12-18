@@ -46,6 +46,7 @@ public class RoleService extends BaseService<RoleMapper, Role> {
 	
 	@Transactional
 	public boolean save(Role role) {
+		role.preInsert();
 		int count = mapper.create(role);
 		List<Long> menuIds = role.getMenuIds();
 		Long roleId = role.getId();
@@ -73,6 +74,7 @@ public class RoleService extends BaseService<RoleMapper, Role> {
 
 	@CacheEvict(value = DEMO_CACHE_NAME)
 	public boolean update(Role role) {
+		role.preUpadate();
 		int r = mapper.update(role);
 		List<Long> menuIds = role.getMenuIds();
 		Long roleId = role.getId();

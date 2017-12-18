@@ -14,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.bamboo.common.annotation.Log;
-import com.bamboo.common.dao.LogDao;
-import com.bamboo.common.domain.LogDO;
+import com.bamboo.common.mapper.LogMapper;
+import com.bamboo.common.domain.SysLog;
 import com.bamboo.common.utils.HttpContextUtils;
 import com.bamboo.common.utils.IPUtils;
 import com.bamboo.common.utils.JSONUtils;
@@ -25,8 +25,9 @@ import com.bamboo.sys.domain.User;
 @Aspect
 @Component
 public class LogAspect {
+	
 	@Autowired
-	LogDao logMapper;
+	LogMapper logMapper;
 
 	@Pointcut("@annotation(com.bamboo.common.annotation.Log)")
 	public void logPointCut() {
@@ -47,7 +48,7 @@ public class LogAspect {
 	private void saveLog(ProceedingJoinPoint joinPoint, long time) {
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 		Method method = signature.getMethod();
-		LogDO sysLog = new LogDO();
+		SysLog sysLog = new SysLog();
 		Log syslog = method.getAnnotation(Log.class);
 		if (syslog != null) {
 			// 注解上的描述
@@ -88,6 +89,6 @@ public class LogAspect {
 		Date date = new Date();
 		sysLog.setGmtCreate(date);
 		// 保存系统日志
-		logMapper.save(sysLog);
+		logMapper.create(sysLog);
 	}
 }

@@ -43,7 +43,7 @@
 		</where>
 	</select>
 
-	<insert id="save" parameterType="com.bamboo.sys.domain.Dept"
+	<insert id="create" parameterType="com.bamboo.sys.domain.Dept"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into sys_dept
 		(

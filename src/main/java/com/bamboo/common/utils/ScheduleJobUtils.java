@@ -1,10 +1,10 @@
 package com.bamboo.common.utils;
 
 import com.bamboo.common.domain.ScheduleJob;
-import com.bamboo.common.domain.TaskDO;
+import com.bamboo.common.domain.SysTask;
 
 public class ScheduleJobUtils {
-	public static ScheduleJob entityToData(TaskDO scheduleJobEntity) {
+	public static ScheduleJob entityToData(SysTask scheduleJobEntity) {
 		ScheduleJob scheduleJob = new ScheduleJob();
 		scheduleJob.setBeanClass(scheduleJobEntity.getBeanClass());
 		scheduleJob.setCronExpression(scheduleJobEntity.getCronExpression());

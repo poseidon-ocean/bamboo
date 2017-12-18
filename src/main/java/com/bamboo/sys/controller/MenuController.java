@@ -3,7 +3,6 @@ package com.bamboo.sys.controller;
 import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.codehaus.groovy.ast.expr.PrefixExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.druid.sql.visitor.functions.If;
 import com.bamboo.common.annotation.Log;
 import com.bamboo.common.controller.BaseController;
 import com.bamboo.common.domain.Tree;
@@ -52,7 +50,7 @@ public class MenuController extends BaseController {
 		} else {
 			model.addAttribute("pName", menuService.get(pId).getName());
 		}
-		return "sys/menu/add";
+		return "sys/menu/menuAdd";
 	}
 
 	@Log("编辑菜单")
@@ -60,7 +58,7 @@ public class MenuController extends BaseController {
 	@GetMapping("/edit/{id}")
 	String edit(Model model, @PathVariable("id") Long id) {
 		model.addAttribute("menu", menuService.get(id));
-		return "sys/menu/edit";
+		return "sys/menu/menuEdit";
 	}
 
 	@Log("保存菜单")

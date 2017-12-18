@@ -1,6 +1,6 @@
 package com.bamboo.common.service;
 
-import com.bamboo.common.domain.FileDO;
+import com.bamboo.common.domain.SysFile;
 
 import java.util.List;
 import java.util.Map;
@@ -14,15 +14,15 @@ import java.util.Map;
  */
 public interface SysFileService {
 	
-	FileDO get(Long id);
+	SysFile get(Long id);
 	
-	List<FileDO> list(Map<String, Object> map);
+	List<SysFile> list(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);
 	
-	int save(FileDO sysFile);
+	int save(SysFile sysFile);
 	
-	int update(FileDO sysFile);
+	int update(SysFile sysFile);
 	
 	int remove(Long id);
 	

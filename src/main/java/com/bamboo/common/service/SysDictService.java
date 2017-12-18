@@ -1,6 +1,6 @@
 package com.bamboo.common.service;
 
-import com.bamboo.common.domain.DictDO;
+import com.bamboo.common.domain.Dict;
 
 import java.util.List;
 import java.util.Map;
@@ -14,19 +14,19 @@ import java.util.Map;
  */
 public interface SysDictService {
 	
-	DictDO get(Long id);
+	Dict get(Long id);
 	
-	List<DictDO> list(Map<String, Object> map);
+	List<Dict> list(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);
 	
-	int save(DictDO sysDict);
+	int save(Dict sysDict);
 	
-	int update(DictDO sysDict);
+	int update(Dict sysDict);
 	
 	int remove(Long id);
 	
 	int batchRemove(Long[] ids);
 
-	List<DictDO> listType();
+	List<Dict> listType();
 }

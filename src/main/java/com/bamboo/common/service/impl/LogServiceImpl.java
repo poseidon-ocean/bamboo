@@ -5,22 +5,22 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bamboo.common.dao.LogDao;
-import com.bamboo.common.domain.LogDO;
+import com.bamboo.common.domain.SysLog;
 import com.bamboo.common.domain.PageDO;
+import com.bamboo.common.mapper.LogMapper;
 import com.bamboo.common.service.LogService;
 import com.bamboo.common.utils.Query;
 
 @Service
 public class LogServiceImpl implements LogService {
 	@Autowired
-	LogDao logMapper;
+	LogMapper logMapper;
 
 	@Override
-	public PageDO<LogDO> queryList(Query query) {
-		List<LogDO> logs = logMapper.list(query);
+	public PageDO<SysLog> queryList(Query query) {
+		List<SysLog> logs = logMapper.list(query);
 		int total = logMapper.count(query);
-		PageDO<LogDO> page = new PageDO<>();
+		PageDO<SysLog> page = new PageDO<>();
 		page.setTotal(total);
 		page.setRows(logs);
 		return page;
