@@ -19,7 +19,7 @@ import com.bamboo.common.controller.BaseController;
 import com.bamboo.common.domain.Tree;
 import com.bamboo.common.utils.R;
 import com.bamboo.sys.domain.Dept;
-import com.bamboo.sys.service.SysDeptService;
+import com.bamboo.sys.service.DeptService;
 
 /**
  * 部门管理
@@ -28,12 +28,12 @@ import com.bamboo.sys.service.SysDeptService;
  
 @Controller
 @RequestMapping("/sys/dept")
-public class DeptController extends BaseController{
+public class DeptController extends BaseController {
 	
 	private static String  prefix= "sys/dept";
 	
 	@Autowired
-	private SysDeptService sysDeptService;
+	private DeptService deptService;
 	
 	@GetMapping()
 	@RequiresPermissions("sys:dept:dept")
@@ -48,7 +48,7 @@ public class DeptController extends BaseController{
 		//查询列表数据
        // Query query = new Query(params);
 		Map<String, Object> query = new HashMap<>();
-		List<Dept> sysDeptList = sysDeptService.list(query);
+		List<Dept> sysDeptList = deptService.list(query);
 	//	int total = sysDeptService.count(query);
 		//PageUtils pageUtils = new PageUtils(sysDeptList, total);
 		return sysDeptList;
@@ -61,7 +61,7 @@ public class DeptController extends BaseController{
 		if (pId == 0) {
 			model.addAttribute("pName", "总部门");
 		} else {
-			model.addAttribute("pName", sysDeptService.get(pId).getName());
+			model.addAttribute("pName", deptService.queryById(pId).getName());
 		}
 	    return "sys/dept/deptAdd";
 	}
@@ -69,8 +69,8 @@ public class DeptController extends BaseController{
 	@GetMapping("/edit/{deptId}")
 	@RequiresPermissions("sys:dept:edit")
 	String edit(@PathVariable("deptId") Long deptId,Model model){
-		Dept sysDept = sysDeptService.get(deptId);
-		model.addAttribute("dept", sysDept);
+		Dept dept = deptService.queryById(deptId);
+		model.addAttribute("dept", dept);
 	    return prefix + "/deptEdit";
 	}
 	
@@ -81,10 +81,7 @@ public class DeptController extends BaseController{
 	@PostMapping("/save")
 	@RequiresPermissions("sys:dept:add")
 	public R save( Dept sysDept){
-		if ("test".equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
-		}
-		if(sysDeptService.save(sysDept)>0){
+		if(deptService.insert(sysDept)){
 			return R.ok();
 		}
 		return R.error();
@@ -96,10 +93,7 @@ public class DeptController extends BaseController{
 	@RequestMapping("/update")
 	@RequiresPermissions("sys:dept:edit")
 	public R update( Dept sysDept){
-		if ("test".equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
-		}
-		if(sysDeptService.update(sysDept)>0){
+		if(deptService.update(sysDept)){
 			return R.ok();
 		}
 		return R.error();
@@ -112,10 +106,7 @@ public class DeptController extends BaseController{
 	@ResponseBody
 	@RequiresPermissions("sys:dept:remove")
 	public R remove( Long deptId){
-		if ("test".equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
-		}
-		if(sysDeptService.remove(deptId)>0){
+		if(deptService.delete(deptId)){
 		return R.ok();
 		}
 		return R.error();
@@ -128,10 +119,7 @@ public class DeptController extends BaseController{
 	@ResponseBody
 	@RequiresPermissions("sys:dept:batchRemove")
 	public R remove(@RequestParam("ids[]") Long[] deptIds){
-		if ("test".equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
-		}
-		sysDeptService.batchRemove(deptIds);
+		deptService.batchRemove(deptIds);
 		return R.ok();
 	}
 	
@@ -140,7 +128,7 @@ public class DeptController extends BaseController{
 	@ResponseBody
 	public Tree<Dept> tree() {
 		Tree<Dept> tree = new Tree<Dept>();
-		tree = sysDeptService.getTree();
+		tree = deptService.getTree();
 		return tree;
 	}
 

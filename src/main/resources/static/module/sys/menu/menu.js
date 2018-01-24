@@ -6,9 +6,6 @@ var Menu = {
 
 $(function() {
 	var defaultColunms = Menu.initColumn();
-//    var table = new BSTable(Menu.id, Menu.prefix + "/list", defaultColunms);
-//   // table.setParentColumn("parentId");
-//    Menu.table = table.init();
     
     var table = new BSTreeTable(Menu.id, Menu.prefix +"/list", defaultColunms);
     table.setExpandColumn(2);

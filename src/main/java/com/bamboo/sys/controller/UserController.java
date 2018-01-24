@@ -75,9 +75,6 @@ public class UserController extends BaseController {
 	@RequestMapping("/save")
 	@ResponseBody
 	R save(User user) {
-		if ("test".equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
-		}
 		user.setPassword(MD5Utils.encrypt(user.getUsername(), user.getPassword()));
 		if (userService.save(user) > 0) {
 			return R.ok();
@@ -90,10 +87,7 @@ public class UserController extends BaseController {
 	@RequestMapping("/update")
 	@ResponseBody
 	R update(User user) {
-		if ("test".equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
-		}
-		if (userService.update(user) > 0) {
+		if (userService.update(user)) {
 			return R.ok();
 		}
 		return R.error();
@@ -104,9 +98,6 @@ public class UserController extends BaseController {
 	@RequestMapping("/remove")
 	@ResponseBody
 	R remove(Long id) {
-		if ("test".equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
-		}
 		if (userService.remove(id) > 0) {
 			return R.ok();
 		}
@@ -118,9 +109,6 @@ public class UserController extends BaseController {
 	@RequestMapping("/batchRemove")
 	@ResponseBody
 	R batchRemove(@RequestParam("ids[]") Long[] userIds) {
-		if ("test".equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
-		}
 		int r = userService.batchremove(userIds);
 		System.out.println(r);
 		if (r > 0) {
@@ -150,9 +138,6 @@ public class UserController extends BaseController {
 	@RequestMapping("/resetPwd")
 	@ResponseBody
 	R resetPwd(User user) {
-		if ("test".equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
-		}
 		user.setPassword(MD5Utils.encrypt(userService.get(user.getId()).getUsername(), user.getPassword()));
 		if (userService.resetPwd(user) > 0) {
 			return R.ok();
