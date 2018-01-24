@@ -1,8 +1,57 @@
+var Dept = {
+    id : "columnTable",//表格id
+    layerIndex : -1,
+    prefix : "/sys/dept"
+};
 
-var prefix = "/sys/dept"
 $(function() {
-	load();
+	var defaultColunms = Dept.initColumn();
+    var table = new BSTable(Dept.id, Role.prefix + "/list", defaultColunms);
+   // table.setPaginationType("client");
+    Dept.table = table.init();
 });
+
+/**
+ * 初始化表格列
+ */
+Dept.initColumn = function(){
+	var columns = [
+		 {checkbox : true },
+		 {title: '序号', formatter: Dept.formatIndex},
+	     {title: '部门名称', field: 'name', align: 'center', valign: 'middle', sortable: true},
+	     {title: '排序', field: 'orderNum', align: 'center', valign: 'middle', sortable: true},
+	     {title: '创建人', field: 'createBy', align: 'center', valign: 'middle', sortable: true},
+	     {title: '创建时间', field: 'createTime', align: 'center', valign: 'middle'},
+	     {title: '操作', field: 'id', align: 'center', valign: 'middle', formatter: Dept.formatOper}
+	];
+	
+	return columns;
+}
+
+/**
+ * 格式序号
+ */
+Dept.formatIndex = function(value, row, index){
+	return index + 1;
+}
+
+/**
+ * 格式操作
+ */
+Dept.formatOper = function(value, row, index){
+	var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'" href="#" mce_href="#" title="编辑" onclick="Dept.edit(\''
+		+ row.id
+		+ '\')"><i class="fa fa-edit"></i></a> ';
+	var a = '<a class="btn btn-primary btn-sm ' + s_add_h + '" href="#" title="增加下級"  mce_href="#" onclick="Dept.add(\''
+	+ row.id
+	+ '\')"><i class="fa fa-plus"></i></a> ';
+	var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="Dept.remove(\''
+		+ row.id
+		+ '\')"><i class="fa fa-remove"></i></a> ';
+	return e + a + d;
+}
+
+
 
 function load() {
 	$('#exampleTable')
@@ -20,18 +69,6 @@ function load() {
 				expandAll : false, // 是否全部展开
 				// toolbar : '#exampleToolbar',
 				columns : [
-					{
-						title : '编号',
-						field : 'deptId',
-						visible : false,
-						align : 'center',
-						valign : 'middle',
-						width : '50px'
-					},
-					{
-						field : 'name',
-						title : '部门名称'
-					},
 					{
 						field : 'orderNum',
 						title : '排序'

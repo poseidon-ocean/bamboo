@@ -200,7 +200,7 @@ MgrUser.batchRemove = function() {
 MgrUser.getTreeData = function() {
 	$.ajax({
 		type : "GET",
-		url : "/system/sysDept/tree",
+		url : "/sys/dept/tree",
 		success : function(tree) {
 			MgrUser.loadTree(tree);
 		}

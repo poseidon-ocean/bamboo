@@ -35,7 +35,7 @@ function update() {
 		success : function(data) {
 			if (data.code == 0) {
 				parent.layer.msg("保存成功");
-				parent.reLoad();
+				parent.Menu.reLoad();
 				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
 				parent.layer.close(index);
 

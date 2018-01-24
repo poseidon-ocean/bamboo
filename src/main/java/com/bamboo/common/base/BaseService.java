@@ -14,10 +14,12 @@ public abstract class BaseService <D extends BaseMapper <T>, T extends BaseEntit
     protected D mapper;
     
     public boolean insert (T entity){
+    	entity.preInsert();
         return mapper.create(entity) > 0;
     }
     
     public boolean update (T entity){
+    	entity.preUpadate();
         return mapper.update(entity) > 0;
     }
 

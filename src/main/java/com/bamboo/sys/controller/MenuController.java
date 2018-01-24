@@ -23,13 +23,14 @@ import com.bamboo.sys.service.MenuService;
 @Controller
 public class MenuController extends BaseController {
 	String prefix = "sys/menu";
+	
 	@Autowired
 	MenuService menuService;
 
 	@RequiresPermissions("sys:menu:menu")
 	@GetMapping()
 	String menu(Model model) {
-		return "sys/menu/menu";
+		return prefix + "/menu";
 	}
 
 	@RequiresPermissions("sys:menu:menu")
@@ -48,17 +49,17 @@ public class MenuController extends BaseController {
 		if (pId == 0) {
 			model.addAttribute("pName", "根目录");
 		} else {
-			model.addAttribute("pName", menuService.get(pId).getName());
+			model.addAttribute("pName", menuService.queryById(pId).getName());
 		}
-		return "sys/menu/menuAdd";
+		return prefix + "/menuAdd";
 	}
 
 	@Log("编辑菜单")
 	@RequiresPermissions("sys:menu:edit")
 	@GetMapping("/edit/{id}")
 	String edit(Model model, @PathVariable("id") Long id) {
-		model.addAttribute("menu", menuService.get(id));
-		return "sys/menu/menuEdit";
+		model.addAttribute("menu", menuService.queryById(id));
+		return prefix + "/menuEdit";
 	}
 
 	@Log("保存菜单")
@@ -69,7 +70,7 @@ public class MenuController extends BaseController {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
-		if (menuService.save(menu) > 0) {
+		if (menuService.insert(menu)) {
 			return R.ok();
 		} else {
 			return R.error(1, "保存失败");
@@ -84,7 +85,7 @@ public class MenuController extends BaseController {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
-		if (menuService.update(menu) > 0) {
+		if (menuService.update(menu)) {
 			return R.ok();
 		} else {
 			return R.error(1, "更新失败");
@@ -99,7 +100,7 @@ public class MenuController extends BaseController {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
-		if (menuService.remove(id) > 0) {
+		if (menuService.delete(id)) {
 			return R.ok();
 		} else {
 			return R.error(1, "删除失败");

@@ -17,6 +17,7 @@
         this.height = 480;						//默认表格高度665
         this.data = {};
         this.queryParams = {}; // 向后台传递的自定义参数
+        this.parentColumn = '';
     };
 
     BSTable.prototype = {
@@ -34,6 +35,7 @@
                         data: this.data
                     },
                     toolbar: "#" + this.toolbarId,//顶部工具条
+                    parentColumn : this.parentColumn,
                     striped: true,     			//是否显示行间隔色
                     cache: false,      			//是否使用缓存,默认为true
                     pagination: true,     		//是否显示分页（*）
@@ -81,6 +83,13 @@
             this.paginationType = type;
         },
 
+        /**
+         * 设置父级字段
+         */
+        setParentColumn : function(parentColumn){
+        	this.parentColumn = parentColumn;
+        },
+        
         /**
          * 设置ajax post请求时候附带的参数
          */
