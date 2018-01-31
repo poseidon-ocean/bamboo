@@ -8,7 +8,7 @@ $(function() {
 	var defaultColunms = Menu.initColumn();
     
     var table = new BSTreeTable(Menu.id, Menu.prefix +"/list", defaultColunms);
-    table.setExpandColumn(2);
+    table.setExpandColumn(0);
     table.setIdField("id");
     table.setCodeField("id");
     table.setParentCodeField("parentId");
@@ -22,8 +22,6 @@ $(function() {
  */
 Menu.initColumn = function(){
 	var columns = [
-		 {checkbox : true },
-		 {title: '序号', formatter: Menu.formatIndex},
 	     {title: '名称', field: 'name', align: 'center', valign: 'middle', sortable: true},
 	     {title: '图标', field: 'icon', align: 'center', valign: 'middle', formatter: Menu.formatIcon},
 	     {title: '类型', field: 'type', align: 'center', valign: 'middle', formatter: Menu.formatType},

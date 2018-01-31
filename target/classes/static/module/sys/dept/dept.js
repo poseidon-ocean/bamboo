@@ -8,7 +8,7 @@ $(function() {
     var defaultColunms = Dept.initColumn();
     
     var table = new BSTreeTable(Dept.id, Dept.prefix +"/list", defaultColunms);
-    table.setExpandColumn(2);
+    table.setExpandColumn(0);
     table.setIdField("id");
     table.setCodeField("id");
     table.setParentCodeField("parentId");
@@ -22,11 +22,9 @@ $(function() {
  */
 Dept.initColumn = function(){
 	var columns = [
-		 {checkbox : true },
-		 {title: '序号', formatter: Dept.formatIndex},
-	     {title: '部门名称', field: 'name', align: 'center', valign: 'middle', sortable: true},
+	     {title: '部门名称', field: 'name', align: 'center', valign: 'middle'},
 	     {title: '排序', field: 'orderNum', align: 'center', valign: 'middle', sortable: true},
-	     {title: '创建人', field: 'createBy', align: 'center', valign: 'middle', sortable: true},
+	     {title: '创建人', field: 'createBy', align: 'center', valign: 'middle'},
 	     {title: '创建时间', field: 'createTime', align: 'center', valign: 'middle'},
 	     {title: '操作', field: 'id', align: 'center', valign: 'middle', formatter: Dept.formatOper}
 	];
@@ -59,7 +57,7 @@ Dept.formatOper = function(row, index){
 
 
 Dept.reLoad = function() {
-	load();
+	Dept.table.refresh();
 }
 
 Dept.add = function(pId) {
@@ -108,7 +106,7 @@ Dept.remove = function(id) {
 
 
 Dept.batchRemove = function() {
-	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+	var rows = $('#columnTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
 	if (rows.length == 0) {
 		layer.msg("请选择要删除的数据");
 		return;

@@ -11,12 +11,12 @@
 						<div class="form-group col-sm-2">
 							<input id="searchName" type="text" class="form-control" placeholder="部门名称">
 						</div>
-						<button class="btn btn-success" onclick="reLoad()">查询</button>
-						<button shiro:hasPermission="sys:dept:add" type="button" class="btn  btn-primary" onclick="add(0)">
+						<button class="btn btn-success" onclick="Dept.reLoad()">查询</button>
+						<button shiro:hasPermission="sys:dept:add" type="button" class="btn  btn-primary" onclick="Dept.add(0)">
 							<i class="fa fa-plus hidden" aria-hidden="true"></i>添加
 						</button>
 						<button shiro:hasPermission="sys:dept:batchRemove" type="button" class="btn  btn-danger"
-							onclick="batchRemove()">
+							onclick="Dept.batchRemove()">
 							<i class="fa fa-trash" aria-hidden="true"></i>删除
 						</button>
 					</div>
@@ -57,6 +57,6 @@
 		</div>
 	</div>
 	<div th:include="include :: footer"></div>
-	<script type="text/javascript" src="/module/sys/dept/dept.js?v=1.0.0"></script>
+	<script type="text/javascript" src="/module/sys/dept/dept.js?v=1.0.6"></script>
 </body>
 </html>

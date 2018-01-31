@@ -42,7 +42,7 @@ public class DeptController extends BaseController {
 	}
 	
 	@ResponseBody
-	@GetMapping("/list")
+	@RequestMapping("/list")
 	@RequiresPermissions("sys:dept:dept")
 	public List<Dept> list(){
 		//查询列表数据
