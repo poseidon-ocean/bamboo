@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+
 @EnableTransactionManagement
 @ServletComponentScan
 @MapperScan({"com.bamboo.*.dao", "com.bamboo.*.mapper"})
@@ -28,7 +29,17 @@ public class BambooApplication {
 			container.addErrorPages(error401Page, error404Page, error500Page);
 			container.setSessionTimeout(1800);// 单位为S
 		});
-
 	}
+	
+	/**
+	 * 启动chat服务
+	 * @return
+	 */
+//	@Bean
+//	public ChatServer startChat() {
+//		ChatServer chatServer = new ChatServer(9527);
+//		chatServer.start();
+//		return chatServer;
+//	}
 
 }

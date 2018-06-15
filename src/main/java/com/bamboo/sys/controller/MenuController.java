@@ -58,7 +58,15 @@ public class MenuController extends BaseController {
 	@RequiresPermissions("sys:menu:edit")
 	@GetMapping("/edit/{id}")
 	String edit(Model model, @PathVariable("id") Long id) {
-		model.addAttribute("menu", menuService.queryById(id));
+		Menu menu = menuService.queryById(id);
+		Long pId = menu.getParentId();
+		model.addAttribute("pId", pId);
+		if (pId == 0) {
+			model.addAttribute("pName", "根目录");
+		} else {
+			model.addAttribute("pName", menuService.queryById(pId).getName());
+		}
+		model.addAttribute("menu", menu);
 		return prefix + "/menuEdit";
 	}
 

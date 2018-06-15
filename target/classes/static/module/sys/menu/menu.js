@@ -75,7 +75,7 @@ Menu.formatOper = function(row, index){
 	
 	var p = '<a class="btn btn-primary btn-sm '
 		+ s_add_h
-		+ '" href="#" mce_href="#" title="添加下级" onclick="Menu.addSub(\''
+		+ '" href="#" mce_href="#" title="添加下级" onclick="Menu.add(\''
 		+ row.id
 		+ '\')"><i class="fa fa-plus"></i></a> ';
 	
